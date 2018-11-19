@@ -1,0 +1,11 @@
+package com.hqbanana.endgamestuffmod.util.handlers;
+
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
+@EventBusSubscriber
+public class RegistryHandler {
+	@SubscribeEvent
+	public static void onItemRegister(RegistryEvent.Register<Item> event) {
+		
+	}
+}

@@ -1,0 +1,7 @@
+package com.hqbanana.endgamestuffmod.tabs;
+
+import net.minecraft.creativetab.CreativeTabs;
+
+public class TabEndgameStuff extends CreativeTabs {
+
+}

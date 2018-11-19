@@ -1,0 +1,43 @@
+package Recipes;
+
+import java.util.Map;
+
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multiset.Entry;
+import com.google.common.collect.Table;
+
+import net.minecraft.item.ItemStack;
+
+public class RubyFurnaceRecipes {
+	private static final RubyFurnaceRecipes INSTANCE = new RubyFurnaceRecipes();
+	private final Table<ItemStack, ItemStack, ItemStack> smeltingList = HashBasedTable.<ItemStack, ItemStack, ItemStack>create();
+	private final Map<ItemStack, Float> experienceList = Maps.<ItemStack, Float>newHashMap();
+	
+	public static RubyFurnaceRecipes getInstance() {
+		return INSTANCE;
+	}
+	
+	private RubyFurnaceRecipes() {
+		
+	}
+	
+	public void addRubyFurnaceRecipe(ItemStack input1, ItemStack input2, ItemStack result, float experience) {
+		if (getRubyResult(input1, input2) != ItemStack.EMPTY) return;
+		this.smeltingList.put(input1, input2, result);
+		this.experienceList.put(result, Float.valueOf(experience));
+	}
+	
+	public ItemStack getRubyResult(ItemStack input1, ItemStack input2) {
+		for (Entry<ItemStack, Map<ItemStack, ItemStack>> entry : this.smeltingList.columnMap().entrySet()) {
+			if (this.compareItemStacks(input1, (ItemStack)entry.getKey())) {
+				for (Entry<ItemStack, ItemStack> ent : entry.getValue().entrySet()) {
+					if (this.compareItemStacks(input2, (ItemStack)ent.getKey())) {
+						return (ItemStack)ent.getValue();
+					}
+				}
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+}

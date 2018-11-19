@@ -1,0 +1,6 @@
+//Items
+item.ruby.name=Ruby
+
+//Blocks
+tile.ruby_block.name=Ruby block
+tile.ruby_ore.name=Ruby ore

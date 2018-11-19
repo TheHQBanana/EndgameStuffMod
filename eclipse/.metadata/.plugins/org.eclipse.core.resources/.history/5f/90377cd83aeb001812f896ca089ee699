@@ -1,0 +1,32 @@
+package com.hqbanana.endgamestuffmod.guis;
+
+import com.hqbanana.endgamestuffmod.containers.ContainerRubyFurnace;
+import com.hqbanana.endgamestuffmod.tileentities.TileEntityRubyFurnace;
+import com.hqbanana.endgamestuffmod.util.Reference;
+
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
+
+public class GuiRubyFurnace extends GuiContainer {
+	private static final ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/gui/ruby_furnace.png");
+	private final InventoryPlayer player;
+	private final TileEntityRubyFurnace te;
+	
+	public GuiRubyFurnace(InventoryPlayer player, TileEntityRubyFurnace te) {
+		super(new ContainerRubyFurnace(player,te));
+		this.player = player;
+		this.te = te;
+	}
+	
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		String tileName = this.te.getDisplayName().getUnformattedText();
+		this.fontRenderer.drawString(tileName, (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2) + 3, y, color)
+	}
+	
+	@Override
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		
+	}
+}

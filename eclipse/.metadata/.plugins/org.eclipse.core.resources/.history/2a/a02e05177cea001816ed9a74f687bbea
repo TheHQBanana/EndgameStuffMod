@@ -1,0 +1,5 @@
+package com.hqbanana.endgamestuffmod.proxy;
+
+public class ClientProxy extends CommonProxy {
+
+}

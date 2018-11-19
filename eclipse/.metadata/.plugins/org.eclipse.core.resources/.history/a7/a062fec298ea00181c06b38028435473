@@ -1,0 +1,8 @@
+package com.hqbanana.endgamestuffmod.blocks;
+
+import com.hqbanana.endgamestuffmod.util.IHasModel;
+import net.minecraft.block.Block;
+
+public class BlockBase extends Block implements IHasModel {
+	
+}

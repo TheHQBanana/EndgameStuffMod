@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+ 
+    "ingredients":
+    [
+ 
+    {
+      "item": "egsm:ruby_block"
+    }
+  
+    ],
+ 
+    "result":
+    {
+        "item": "egsm:ruby",
+        "count": 9
+    }
+}

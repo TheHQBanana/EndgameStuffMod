@@ -1,0 +1,7 @@
+package Recipes;
+
+public class RubyFurnaceRecipes {
+	private static final RubyFurnaceRecipes INSTANCE = new RubyFurnaceRecipes();
+	private final Table<ItemStack, ItemStack, ItemStack> smeltingList = HashBasedTable.<ItemStack, ItemStack, ItemStack>create();
+	private final Map<ItemStack, Float> experienceList = Maps.<ItemStack, Float>newHashMap();
+}

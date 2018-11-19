@@ -1,0 +1,13 @@
+//Items
+item.ruby.name=Ruby
+
+//Blocks
+tile.ruby_block.name=Ruby block
+tile.ruby_ore.name=Ruby ore
+tile.ruby_furnace.name=Ruby furnace
+
+//Tabs
+itemGroup.endgamestufftab=Endgame stuff
+
+//Containers
+container.ruby_furnace=Ruby furnace

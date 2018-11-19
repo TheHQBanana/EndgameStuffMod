@@ -1,0 +1,6 @@
+package com.hqbanana.endgamestuffmod;
+
+@Mod
+public class Main {
+
+}

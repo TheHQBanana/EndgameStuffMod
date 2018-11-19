@@ -1,0 +1,5 @@
+package com.hqbanana.endgamestuffmod.blocks;
+
+public class BlockBase extends Block implements IHasModel {
+	
+}

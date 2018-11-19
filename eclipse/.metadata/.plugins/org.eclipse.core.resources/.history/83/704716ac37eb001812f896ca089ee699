@@ -1,0 +1,12 @@
+package com.hqbanana.endgamestuffmod.containers.slots;
+
+import net.minecraft.inventory.Slot;
+
+public class SlotRubyFurnaceOutput extends Slot {
+	private final EntityPlayer player;
+	private int removeCount;
+	
+	public SlotRubyFurnaceOutput() {
+		
+	}
+}
