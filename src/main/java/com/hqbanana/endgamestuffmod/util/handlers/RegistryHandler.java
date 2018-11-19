@@ -4,7 +4,6 @@ import com.hqbanana.endgamestuffmod.Main;
 import com.hqbanana.endgamestuffmod.init.ModBlocks;
 import com.hqbanana.endgamestuffmod.init.ModItems;
 import com.hqbanana.endgamestuffmod.init.ModRecipes;
-import com.hqbanana.endgamestuffmod.util.IHasModel;
 import com.hqbanana.endgamestuffmod.world.ModWorldGen;
 
 import net.minecraft.block.Block;
@@ -27,21 +26,6 @@ public class RegistryHandler {
 	public static void onBlockRegister(RegistryEvent.Register<Block> event) {
 		event.getRegistry().registerAll(ModBlocks.BLOCKS.toArray(new Block[0]));
 		TileEntityHandler.registerTileEntities();
-	}
-	
-	@SubscribeEvent
-	public static void onModelRegister(ModelRegistryEvent event) {
-		for (Item item : ModItems.ITEMS) {
-			if (item instanceof IHasModel) {
-				((IHasModel)item).registerModels();
-			}
-		}
-		
-		for (Block block : ModBlocks.BLOCKS) {
-			if (block instanceof IHasModel) {
-				((IHasModel)block).registerModels();
-			}
-		}
 	}
 	
 	public static void preInitRegistries() {

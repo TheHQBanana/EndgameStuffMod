@@ -5,9 +5,11 @@ item.ruby.name=Ruby
 tile.ruby_block.name=Ruby block
 tile.ruby_ore.name=Ruby ore
 tile.ruby_furnace.name=Ruby furnace
+tile.ruby_furnace_electric.name=Electric ruby furnace
 
 //Tabs
 itemGroup.endgamestufftab=Endgame stuff
 
 //Containers
 container.ruby_furnace=Ruby furnace
+container.ruby_furnace_electric=Electric ruby furnace

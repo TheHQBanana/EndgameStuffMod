@@ -9,4 +9,5 @@ public class Reference {
 	public static final String COMMON_PROXY_CLASS = "com.hqbanana.endgamestuffmod.proxy.CommonProxy";
 	
 	public static final int GUI_RUBY_FURNACE = 0;
+	public static final int GUI_RUBY_FURNACE_ELECTRIC = 1;
 }
