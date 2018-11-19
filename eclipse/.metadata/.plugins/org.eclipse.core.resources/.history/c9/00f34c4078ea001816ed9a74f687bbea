@@ -1,6 +1,0 @@
-package com.hqbanana.endgamestuffmod.util;
-
-public class Reference {
-	public static final String MOD_ID = "egsm";
-	public static final String NAME = "Endgame stuff mod";
-}

@@ -1,9 +1,0 @@
-package com.hqbanana.endgamestuffmod.blocks;
-
-import net.minecraft.block.material.Material;
-
-public class RubyBlock extends BlockBase {
-	public RubyBlock(String name, Material material) {
-		super(name, material);
-	}
-}

@@ -1,5 +1,0 @@
-package com.hqbanana.endgamestuffmod.tabs;
-
-public class TabEndgameStuff extends CreativeTabs {
-
-}

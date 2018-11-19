@@ -1,6 +1,0 @@
-package com.hqbanana.endgamestuffmod.util.handlers;
-
-@EventBusSubscriber
-public class RegistryHandler {
-
-}
