@@ -34,6 +34,7 @@ public class CustomEnergyStorage extends EnergyStorage
     @Override
     public int extractEnergy(int maxExtract, boolean simulate) 
     {
+    	System.out.println("Stored energy: " + energy + " - incomingenergy: " + maxExtract);
     	return super.extractEnergy(maxExtract, simulate);
     }
     
@@ -67,7 +68,6 @@ public class CustomEnergyStorage extends EnergyStorage
     	this.capacity = compound.getInteger("Capacity");
     	this.maxReceive = compound.getInteger("MaxReceive");
     	this.maxExtract = compound.getInteger("MaxExtract");
-    	System.out.println("CAPACITY: " + this.capacity);
     }
     
     public void writeToNBT(NBTTagCompound compound)

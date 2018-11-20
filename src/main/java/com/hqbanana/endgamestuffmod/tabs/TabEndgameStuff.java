@@ -9,8 +9,9 @@ public class TabEndgameStuff extends CreativeTabs {
 	public TabEndgameStuff(String label) {
 		super("endgamestufftab");
 	}
-	
-	public ItemStack getTabIconItem() {
+
+	@Override
+	public ItemStack createIcon() {
 		return new ItemStack(ModItems.RUBY);
 	}
 }

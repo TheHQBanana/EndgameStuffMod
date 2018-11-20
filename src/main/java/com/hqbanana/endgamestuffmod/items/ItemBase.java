@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 
 public class ItemBase extends Item {
 	public ItemBase(String name) {
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(name);
 		setCreativeTab(Main.ENDGAME_STUFF_TAB);
 		ModItems.ITEMS.add(this);

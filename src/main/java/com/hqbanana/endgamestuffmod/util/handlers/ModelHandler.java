@@ -5,6 +5,7 @@ import com.hqbanana.endgamestuffmod.init.ModItems;
 import com.hqbanana.endgamestuffmod.util.Reference;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod;
@@ -19,13 +20,13 @@ public class ModelHandler {
     	System.out.println("MODEL REGISTRY BEING EXECUTED!!");
         ModelLoader.setCustomModelResourceLocation(ModItems.RUBY, 0,
                 new ModelResourceLocation(ModItems.RUBY.getRegistryName(), "inventory"));
-        /*ModelLoader.setCustomModelResourceLocation(ModBlocks.RUBY_BLOCK, 0,
-                new ModelResourceLocation(ModBlocks.RUBY_BLOCK.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(ModBlocks.RUBY_FURNACE, 0,
-                new ModelResourceLocation(ModBlocks.RUBY_FURNACE.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(ModBlocks.RUBY_FURNACE_ELECTRIC, 0,
-                new ModelResourceLocation(ModBlocks.RUBY_FURNACE_ELECTRIC.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(ModBlocks.RUBY_ORE, 0,
-                new ModelResourceLocation(ModBlocks.RUBY_ORE.getRegistryName(), "inventory"));*/
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_BLOCK), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_BLOCK).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_FURNACE), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_FURNACE).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_FURNACE_ELECTRIC), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_FURNACE_ELECTRIC).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_ORE), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_ORE).getRegistryName(), "inventory"));
     }
 }

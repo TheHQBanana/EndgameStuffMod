@@ -1,5 +1,7 @@
 package com.hqbanana.endgamestuffmod.tileentities;
 
+import javax.annotation.Nullable;
+
 import com.hqbanana.endgamestuffmod.blocks.BlockRubyFurnace;
 import com.hqbanana.endgamestuffmod.blocks.BlockRubyFurnaceElectric;
 import com.hqbanana.endgamestuffmod.recipes.RubyFurnaceRecipes;
@@ -7,6 +9,7 @@ import com.hqbanana.endgamestuffmod.util.CustomEnergyStorage;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -14,6 +17,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.EnumFacing;
@@ -39,7 +44,7 @@ public class TileEntityRubyFurnaceElectric extends TileEntity implements ITickab
 	};
 	private int minEnergyToOperate = 20, maxEnergyStored = 100000;
 	
-	private CustomEnergyStorage energyStorage = new CustomEnergyStorage(maxEnergyStored, 100, 0, 100000);
+	private CustomEnergyStorage energyStorage = new CustomEnergyStorage(maxEnergyStored, 100, 100, 100000);
 	
 	private String customName;
 	private ItemStack smelting = ItemStack.EMPTY;
@@ -68,9 +73,38 @@ public class TileEntityRubyFurnaceElectric extends TileEntity implements ITickab
 		this.customName = customName;
 	}
 	
+	private void sendUpdates() {
+		world.markBlockRangeForRenderUpdate(pos, pos);
+		world.notifyBlockUpdate(pos, getState(), getState(), 3);
+		world.scheduleBlockUpdate(pos,this.getBlockType(),0,0);
+		markDirty();
+	}
+	
+	private IBlockState getState() {
+		return world.getBlockState(pos);
+	}
+	
 	@Override
 	public ITextComponent getDisplayName() {
-		return this.hasCustomName() ? new TextComponentString(this.customName) : new TextComponentTranslation("container.ruby_furnace");
+		return this.hasCustomName() ? new TextComponentString(this.customName) : new TextComponentTranslation("container.ruby_furnace_electric");
+	}
+	
+	@Override
+	@Nullable
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(this.pos, 1, this.getUpdateTag());
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		super.onDataPacket(net, pkt);
+		handleUpdateTag(pkt.getNbtCompound());
+		readFromNBT(pkt.getNbtCompound());
 	}
 	
 	@Override
@@ -80,7 +114,7 @@ public class TileEntityRubyFurnaceElectric extends TileEntity implements ITickab
 		this.cookTime = compound.getInteger("CookTime");
 		this.energyStorage.readFromNBT(compound);
 		
-		if (compound.hasKey("Name", 8)) this.setCustomName(compound.getString("CustomName"));
+		if (compound.hasKey("Name", 8)) this.setCustomName(compound.getString("Name"));
 	}
 	
 	//TODO:: Fix forge energy capability usage in GUI!
@@ -102,47 +136,60 @@ public class TileEntityRubyFurnaceElectric extends TileEntity implements ITickab
 		tick = tick > 20 ? 0 : tick;
 		
 		//if (tick == 0) System.out.println("Energy: " + Integer.toString(energyStored));
-		 if (!this.world.isRemote) {
-		ItemStack[] inputs = new ItemStack[] { handler.getStackInSlot(0), handler.getStackInSlot(1) };
-
-		if (energyStorage.getEnergyStored() >= minEnergyToOperate) {
-			if (cookTime > 0) {
-				energyStorage.extractEnergy(minEnergyToOperate, false);
-				energyStored -= minEnergyToOperate;
-				cookTime++;
-				BlockRubyFurnaceElectric.setState(true, world, pos);
-				if (cookTime == 100) {
-					if (handler.getStackInSlot(2).getCount() > 0) handler.getStackInSlot(2).grow(smelting.getCount());
-					else handler.insertItem(2, smelting, false);
-					smelting = ItemStack.EMPTY;
-					cookTime = 0;
-					return;
-				}
-			} else {
-				if (!inputs[0].isEmpty() && !inputs[1].isEmpty()) {
-					ItemStack output = RubyFurnaceRecipes.getInstance().getRubyResult(inputs[0], inputs[1]);
-					if (!output.isEmpty()) {
-						smelting = output;
-						cookTime++;
-						inputs[0].shrink(1);
-						inputs[1].shrink(1);
-						handler.setStackInSlot(0, inputs[0]);
-						handler.setStackInSlot(1, inputs[1]);
-						energyStorage.extractEnergy(minEnergyToOperate, false);
-						energyStored -= minEnergyToOperate;
+		if (!this.world.isRemote) {
+			 ItemStack[] inputs = new ItemStack[] { handler.getStackInSlot(0), handler.getStackInSlot(1) };
+				//System.out.println("ITEMS: " + inputs[0] + ", " + inputs[1]);
+			if (energyStorage.getEnergyStored() >= minEnergyToOperate) {
+				if (cookTime > 0) {
+					energyStorage.extractEnergy(minEnergyToOperate, false);
+					setBlockToUpdate();
+					//System.out.println("UPDATING BLOCK!");
+					//energyStored -= minEnergyToOperate;
+					cookTime++;
+					BlockRubyFurnaceElectric.setState(true, world, pos);
+					if (cookTime == 100) {
+						if (handler.getStackInSlot(2).getCount() > 0) handler.getStackInSlot(2).grow(smelting.getCount());
+						else handler.insertItem(2, smelting, false);
+						smelting = ItemStack.EMPTY;
+						cookTime = 0;
+						return;
+					}
+				} else {
+					if (!inputs[0].isEmpty() && !inputs[1].isEmpty()) {
+						ItemStack output = RubyFurnaceRecipes.getInstance().getRubyResult(inputs[0], inputs[1]);
+						if (!output.isEmpty()) {
+							System.out.println("STARTING SMELT");
+							smelting = output;
+							cookTime++;
+							inputs[0].shrink(1);
+							inputs[1].shrink(1);
+							handler.setStackInSlot(0, inputs[0]);
+							handler.setStackInSlot(1, inputs[1]);
+							energyStorage.extractEnergy(minEnergyToOperate, false);
+							//energyStored -= minEnergyToOperate;
+							setBlockToUpdate();
+						}
 					}
 				}
 			}
 		}
-		 }
+	}
+	
+	private void setBlockToUpdate() {
+		sendUpdates();
+		//System.out.println("UPDATING...!");
+		//shouldUpdate = true;
 	}
 	
 	public int getEnergyStored() {
-		return this.energyStored;
+		//setBlockToUpdate();
+		//System.out.println("Stored: " + this.energyStorage.getEnergyStored());
+		return this.energyStorage.getEnergyStored();
 	}
 	
 	public int getMaxEnergyStored() {
-		return this.maxEnergyStored;
+		//System.out.println("Stored: " + this.energyStorage.getMaxEnergyStored());
+		return this.energyStorage.getMaxEnergyStored();
 	}
 	
 	private boolean canSmelt() {
