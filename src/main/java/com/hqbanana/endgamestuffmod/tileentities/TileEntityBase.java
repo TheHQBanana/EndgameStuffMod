@@ -1,5 +1,6 @@
 package com.hqbanana.endgamestuffmod.tileentities;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -51,6 +52,10 @@ public class TileEntityBase extends TileEntity {
 	public void updateRedstone() {
 		if (!world.isRemote) previousRedstoneSignal = getRedstoneSignal();
 	}
+	
+	public boolean isUsableByPlayer(EntityPlayer player) {
+		return this.world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64;
+ 	}
 	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket()

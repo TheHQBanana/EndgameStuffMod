@@ -1,10 +1,11 @@
 package com.hqbanana.endgamestuffmod.tileentities;
 
+import com.hqbanana.endgamestuffmod.power.CustomEnergyStorage;
 import com.hqbanana.endgamestuffmod.recipes.RubyFurnaceRecipes;
-import com.hqbanana.endgamestuffmod.util.CustomEnergyStorage;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -23,7 +24,7 @@ public class TileEntityRubyFurnaceElectric extends CustomEnergyStorage implement
 	};
 	
 	public TileEntityRubyFurnaceElectric() {
-		super("rubyFurnaceElectric", 100000, 100, 0, 100000);
+		super("rubyFurnaceElectric", 100000, 100, 0, 0);
 	}
 	
 	private int minEnergyToOperate = 20;
@@ -51,9 +52,6 @@ public class TileEntityRubyFurnaceElectric extends CustomEnergyStorage implement
 		this.handler.deserializeNBT(compound.getCompoundTag("Inventory"));
 		this.cookTime = compound.getInteger("CookTime");
 	}
-	
-	//TODO:: Fix forge energy capability usage in GUI!
-	//https://mcforge.readthedocs.io/en/latest/tileentities/tileentity/#synchronizing-the-data-to-the-client-
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -115,9 +113,12 @@ public class TileEntityRubyFurnaceElectric extends CustomEnergyStorage implement
         }
 	}
 	
-	public boolean isUsableByPlayer(EntityPlayer player) {
-		return this.world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64;
- 	}
+	public void dropInventory() {
+		for (int i = 0; i < this.handler.getSlots(); ++i) {
+			ItemStack itemStack = this.handler.getStackInSlot(i);
+			if (!itemStack.isEmpty()) InventoryHelper.spawnItemStack(getWorld(), pos.getX(), pos.getY(), pos.getZ(), itemStack);
+		}
+	}
 	
 	public String getGuiId() {
 		return "egsm:ruby_furnace_electric";

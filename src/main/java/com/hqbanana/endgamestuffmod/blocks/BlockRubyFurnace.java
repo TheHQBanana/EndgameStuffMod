@@ -103,8 +103,6 @@ public class BlockRubyFurnace extends BlockBase implements ITileEntityProvider {
 	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		//TileEntityRubyFurnace te = (TileEntityRubyFurnace)worldIn.getTileEntity(pos);
-		//InventoryHelper.dropInventoryItems(worldIn, pos, te.h);s
 		super.breakBlock(worldIn, pos, state);
 	}
 	

@@ -18,6 +18,7 @@ public class ModelHandler {
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
     	System.out.println("MODEL REGISTRY BEING EXECUTED!!");
+    	//----------------Reference items----------------//
         ModelLoader.setCustomModelResourceLocation(ModItems.RUBY, 0,
                 new ModelResourceLocation(ModItems.RUBY.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_BLOCK), 0,
@@ -28,5 +29,10 @@ public class ModelHandler {
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_FURNACE_ELECTRIC).getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_ORE), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_ORE).getRegistryName(), "inventory"));
+      //----------------Reference items----------------//
+      //----------------Coal generators----------------//
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_TERRIBLE), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_TERRIBLE).getRegistryName(), "inventory"));
+      //----------------Coal generators----------------//
     }
 }

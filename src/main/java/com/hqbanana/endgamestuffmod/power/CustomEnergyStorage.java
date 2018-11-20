@@ -1,4 +1,4 @@
-package com.hqbanana.endgamestuffmod.util;
+package com.hqbanana.endgamestuffmod.power;
 
 import com.hqbanana.endgamestuffmod.tileentities.TileEntityBase;
 
@@ -34,7 +34,6 @@ public class CustomEnergyStorage extends TileEntityBase implements IEnergyStorag
     	int energyReceived = Math.min(maxEnergy - energy, Math.min(this.maxReceive, maxReceive));
         if (!simulate) {
             energy += energyReceived;
-            System.out.println("Energy: " + energy + ", energy received: " + energyReceived);
             this.markDirty();
         }
         return energyReceived;
@@ -53,12 +52,19 @@ public class CustomEnergyStorage extends TileEntityBase implements IEnergyStorag
     public int internalExtractEnergy(int extract, boolean simulate) {
 		int energyExtract = (int) Math.min(Math.max(energy, 0), extract);
 		if (!simulate) {
-			System.out.println("Energy before: " + energy + ", energy extract: " + energyExtract);
 			energy -= energyExtract;
-			System.out.println("Energy after: " + energy);
 			this.markDirty();
 		}
 		return energyExtract;
+	}
+    
+    public int internalReceiveEnergy(int receive, boolean simulate) {
+		int energyReceived = Math.min(maxEnergy - energy, receive);
+		if (!simulate) {
+			energy += energyReceived;
+			this.markDirty();
+		}
+		return energyReceived;
 	}
     
     @Override
@@ -69,6 +75,14 @@ public class CustomEnergyStorage extends TileEntityBase implements IEnergyStorag
     @Override
     public int getMaxEnergyStored() {
     	return maxEnergy;
+    }
+    
+    public int getMaxEnergyExtract() {
+    	return maxExtract;
+    }
+    
+    public int getMaxEnergyInsert() {
+    	return maxReceive;
     }
     
     @Override
