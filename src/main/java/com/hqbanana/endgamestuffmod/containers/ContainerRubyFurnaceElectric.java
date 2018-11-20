@@ -18,7 +18,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerRubyFurnaceElectric extends Container {
 	private final TileEntityRubyFurnaceElectric te;
-	private int cookTime, energyStored, maxEnergyStored;
+	private int cookTime;
 	
 	public ContainerRubyFurnaceElectric(InventoryPlayer player, TileEntityRubyFurnaceElectric te) {
 		this.te = te;
@@ -47,14 +47,10 @@ public class ContainerRubyFurnaceElectric extends Container {
 			IContainerListener listener = (IContainerListener)this.listeners.get(i);
 			
 			if (this.cookTime != this.te.getField(0)) listener.sendWindowProperty(this, 0, this.te.getField(0));
-			if (this.energyStored != this.te.getField(1)) listener.sendWindowProperty(this, 1, this.te.getField(1));
-			if (this.maxEnergyStored != this.te.getField(2)) listener.sendWindowProperty(this, 2, this.te.getField(2));
 			
 		}
 		
 		this.cookTime = this.te.getField(0);
-		this.energyStored = this.te.getField(1);
-		this.maxEnergyStored = this.te.getField(2);
 	}
 	
 	@Override
