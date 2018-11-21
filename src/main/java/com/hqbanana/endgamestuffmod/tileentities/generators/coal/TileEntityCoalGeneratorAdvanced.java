@@ -3,6 +3,7 @@ package com.hqbanana.endgamestuffmod.tileentities.generators.coal;
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase {
@@ -46,5 +47,20 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 			transmitEnergy();
 			this.markDirty();
 		}
+	}
+	
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		compound = super.writeToNBT(compound);
+		compound.setInteger("SpeedUpgradeModifier", this.speedUpgradeModifier);
+		compound.setInteger("EfficiencyUpgradeModifier", this.efficiencyUpgradeModifier);
+		return compound;
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.speedUpgradeModifier = compound.getInteger("SpeedUpgradeModifier");
+		this.efficiencyUpgradeModifier = compound.getInteger("EfficiencyUpgradeModifier");
 	}
 }
