@@ -1,7 +1,6 @@
 package com.hqbanana.endgamestuffmod.tileentities.generators.coal;
 
-import com.hqbanana.endgamestuffmod.power.CustomEnergyStorage;
-import com.hqbanana.endgamestuffmod.power.PowerTransmitter;
+import com.hqbanana.endgamestuffmod.tileentities.generators.TileEntityGeneratorBase;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -16,7 +15,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityCoalGeneratorBase extends CustomEnergyStorage implements ITickable {
+public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase implements ITickable {
 	private ItemStackHandler inventory = new ItemStackHandler(1) {
 		@Override
 		protected void onContentsChanged(int slot) {
@@ -26,13 +25,8 @@ public class TileEntityCoalGeneratorBase extends CustomEnergyStorage implements 
 	};
 	
 	public TileEntityCoalGeneratorBase(String name, int fuelBurnModifier, int maxPower, int maxIn, int maxOut, int energy) {
-		super(name, maxPower, maxIn, maxOut, energy);
-		this.fuelBurnModifier = fuelBurnModifier;
-		this.rfPerTick *= fuelBurnModifier;
+		super(name, fuelBurnModifier, maxPower, maxIn, maxOut, energy);
 	}
-	
-	private PowerTransmitter transmitter;
-	private int rfPerTick = 20, totalBurnTime, currentBurnTime, fuelBurnModifier = 1;
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
@@ -47,24 +41,16 @@ public class TileEntityCoalGeneratorBase extends CustomEnergyStorage implements 
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		this.inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
-		this.rfPerTick = compound.getInteger("RFPerTick");
-		this.totalBurnTime = compound.getInteger("TotalBurnTime");
-		this.currentBurnTime = compound.getInteger("CurrentBurnTime");
-		this.fuelBurnModifier = compound.getInteger("FuelBurnModifier");
-	}
-	
-	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound = super.writeToNBT(compound);
 		compound.setTag("Inventory", this.inventory.serializeNBT());
-		compound.setInteger("RFPerTick", this.rfPerTick);
-		compound.setInteger("TotalBurnTime", this.totalBurnTime);
-		compound.setInteger("CurrentBurnTime", (short)this.currentBurnTime);
-		compound.setInteger("FuelBurnModifier", this.fuelBurnModifier);
 		return compound;
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
 	}
 	
 	@Override
@@ -88,7 +74,8 @@ public class TileEntityCoalGeneratorBase extends CustomEnergyStorage implements 
 		}
 	}
 	
-	private void burnFuel() {
+	@Override
+	protected void burnFuel() {
 		this.inventory.getStackInSlot(0).shrink(1);
 	}
 	
@@ -105,19 +92,5 @@ public class TileEntityCoalGeneratorBase extends CustomEnergyStorage implements 
 			
 			return 0;
 		}
-	}
-	
-	public boolean transmitEnergy() {
-		if (transmitter == null) transmitter = new PowerTransmitter(this.pos);
-		transmitter.transmitEnergy(world, this);
-		return true;
-	}
-	
-	public int getCurrentBurnTime() {
-		return currentBurnTime;
-	}
-	
-	public int getTotalBurnTime() {
-		return totalBurnTime;
 	}
 }

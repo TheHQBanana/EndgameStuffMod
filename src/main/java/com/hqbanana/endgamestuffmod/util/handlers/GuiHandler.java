@@ -21,7 +21,7 @@ public class GuiHandler implements IGuiHandler {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == Reference.GUI_RUBY_FURNACE) return new ContainerRubyFurnace(player.inventory, (TileEntityRubyFurnace)world.getTileEntity(new BlockPos(x, y, z)));
 		if (ID == Reference.GUI_RUBY_FURNACE_ELECTRIC) return new ContainerRubyFurnaceElectric(player.inventory, (TileEntityRubyFurnaceElectric)world.getTileEntity(new BlockPos(x, y, z)));
-		if (ID == Reference.GUI_COAL_GENERATOR_TERRIBLE) return new ContainerCoalGeneratorTerrible(player.inventory, (TileEntityCoalGeneratorTerrible)world.getTileEntity(new BlockPos(x, y, z)));
+		if (ID == Reference.GUI_COAL_GENERATOR) return new ContainerCoalGeneratorTerrible(player.inventory, (TileEntityCoalGeneratorTerrible)world.getTileEntity(new BlockPos(x, y, z)));
 		return null;
 	}
 
@@ -29,7 +29,7 @@ public class GuiHandler implements IGuiHandler {
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == Reference.GUI_RUBY_FURNACE) return new GuiRubyFurnace(player.inventory, (TileEntityRubyFurnace)world.getTileEntity(new BlockPos(x, y, z)));
 		if (ID == Reference.GUI_RUBY_FURNACE_ELECTRIC) return new GuiRubyFurnaceElectric(player.inventory, (TileEntityRubyFurnaceElectric)world.getTileEntity(new BlockPos(x, y, z)));
-		if (ID == Reference.GUI_COAL_GENERATOR_TERRIBLE) return new GuiCoalGeneratorTerrible(player.inventory, (TileEntityCoalGeneratorTerrible)world.getTileEntity(new BlockPos(x, y, z)));
+		if (ID == Reference.GUI_COAL_GENERATOR) return new GuiCoalGeneratorTerrible(player.inventory, (TileEntityCoalGeneratorTerrible)world.getTileEntity(new BlockPos(x, y, z)));
 		return null;
 	}
 	

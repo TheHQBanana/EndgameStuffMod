@@ -31,11 +31,11 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockCoalGeneratorTerrible extends BlockBase implements ITileEntityProvider {
+public class BlockCoalGeneratorOkay extends BlockBase implements ITileEntityProvider {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool BURNING = PropertyBool.create("burning");
 	
-	public BlockCoalGeneratorTerrible(String name, Material material) {
+	public BlockCoalGeneratorOkay(String name, Material material) {
 		super(name, material);
 		setSoundType(SoundType.METAL);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING,  EnumFacing.NORTH).withProperty(BURNING, false));
