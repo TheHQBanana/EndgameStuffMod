@@ -8,10 +8,11 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerCoalGeneratorBase extends ContainerGeneratorBase {
+	IItemHandler handler = null;
+	
 	public ContainerCoalGeneratorBase(InventoryPlayer player, TileEntityCoalGeneratorBase te) {
 		super(player, te);
-		IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
+		handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		this.addSlotToContainer(new SlotItemHandler(handler, 0, 80, 47));
 	}
 }

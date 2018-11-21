@@ -6,15 +6,13 @@ import com.hqbanana.endgamestuffmod.power.PowerTransmitter;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityGeneratorBase extends CustomEnergyStorage {
-	public TileEntityGeneratorBase(String name, int fuelBurnModifier, int maxPower, int maxIn, int maxOut, int energy) {
+	public TileEntityGeneratorBase(String name, int maxPower, int maxIn, int maxOut, int energy) {
 		super(name, maxPower, maxIn, maxOut, energy);
-		this.fuelBurnModifier = fuelBurnModifier;
-		this.rfPerTick *= fuelBurnModifier;
 	}
 	
 	protected PowerTransmitter transmitter;
 	
-	protected int rfPerTick = 20, totalBurnTime, currentBurnTime, fuelBurnModifier = 1;
+	protected int rfPerTick = 20, totalBurnTime, currentBurnTime;
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -22,7 +20,6 @@ public class TileEntityGeneratorBase extends CustomEnergyStorage {
 		this.rfPerTick = compound.getInteger("RFPerTick");
 		this.totalBurnTime = compound.getInteger("TotalBurnTime");
 		this.currentBurnTime = compound.getInteger("CurrentBurnTime");
-		this.fuelBurnModifier = compound.getInteger("FuelBurnModifier");
 	}
 	
 	@Override
@@ -31,7 +28,6 @@ public class TileEntityGeneratorBase extends CustomEnergyStorage {
 		compound.setInteger("RFPerTick", this.rfPerTick);
 		compound.setInteger("TotalBurnTime", this.totalBurnTime);
 		compound.setInteger("CurrentBurnTime", (short)this.currentBurnTime);
-		compound.setInteger("FuelBurnModifier", this.fuelBurnModifier);
 		return compound;
 	}
 	

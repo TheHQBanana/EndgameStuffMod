@@ -1,6 +1,6 @@
 package com.hqbanana.endgamestuffmod.containers;
 
-import com.hqbanana.endgamestuffmod.containers.slots.SlotRubyFurnaceFuel;
+import com.hqbanana.endgamestuffmod.containers.slots.SlotUpgrade;
 import com.hqbanana.endgamestuffmod.containers.slots.SlotRubyFurnaceOutput;
 import com.hqbanana.endgamestuffmod.recipes.RubyFurnaceRecipes;
 import com.hqbanana.endgamestuffmod.tileentities.TileEntityRubyFurnace;

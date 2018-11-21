@@ -6,12 +6,8 @@ tile.ruby_block.name=Ruby block
 tile.ruby_ore.name=Ruby ore
 tile.ruby_furnace.name=Ruby furnace
 tile.ruby_furnace_electric.name=Electric ruby furnace
-tile.coal_generator_terrible.name=Terrible coal generator
-tile.coal_generator_okay.name=Okay coal generator
-tile.coal_generator_decent.name=Decent coal generator
-tile.coal_generator_efficient.name=Efficient coal generator
-tile.coal_generator_amazing.name=Amazing coal generator
-tile.coal_generator_overkill.name=Overkill coal generator
+tile.coal_generator_simple.name=Simple coal generator
+tile.coal_generator_advanced.name=Advanced coal generator
 
 //Tabs
 itemGroup.endgamestufftab=Endgame stuff

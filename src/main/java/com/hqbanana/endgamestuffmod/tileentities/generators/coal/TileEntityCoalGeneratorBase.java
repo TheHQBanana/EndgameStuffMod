@@ -3,6 +3,7 @@ package com.hqbanana.endgamestuffmod.tileentities.generators.coal;
 import com.hqbanana.endgamestuffmod.tileentities.generators.TileEntityGeneratorBase;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -11,12 +12,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase implements ITickable {
-	private ItemStackHandler inventory = new ItemStackHandler(1) {
+	protected ItemStackHandler inventory = new ItemStackHandler(1) {
 		@Override
 		protected void onContentsChanged(int slot) {
 			super.onContentsChanged(slot);
@@ -24,8 +27,8 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase impleme
 		};
 	};
 	
-	public TileEntityCoalGeneratorBase(String name, int fuelBurnModifier, int maxPower, int maxIn, int maxOut, int energy) {
-		super(name, fuelBurnModifier, maxPower, maxIn, maxOut, energy);
+	public TileEntityCoalGeneratorBase(String name, int maxPower, int maxIn, int maxOut, int energy) {
+		super(name, maxPower, maxIn, maxOut, energy);
 	}
 	
 	@Override
@@ -58,12 +61,14 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase impleme
 		if (!this.world.isRemote) {
 			if (!this.inventory.getStackInSlot(0).isEmpty()) {
 				int burnTime = getItemBurnTime(this.inventory.getStackInSlot(0));
-				if (totalBurnTime == 0 && burnTime > 0) totalBurnTime = burnTime; 
+				if (totalBurnTime == 0 && burnTime > 0) {
+					totalBurnTime = burnTime; 
+					burnFuel();
+				}
 				if (currentBurnTime < totalBurnTime && this.getEnergyStored() < this.getMaxEnergyStored() && burnTime > 0) {
 					internalReceiveEnergy(rfPerTick, false);
-					currentBurnTime += fuelBurnModifier;
-				} else if (currentBurnTime >= totalBurnTime) {
-					burnFuel();
+					currentBurnTime++;
+				} else if (currentBurnTime >= totalBurnTime && currentBurnTime != 0 && totalBurnTime != 0) {
 					currentBurnTime = 0;
 					totalBurnTime = 0;
 				}
@@ -91,6 +96,12 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase impleme
 			if (item == Items.COAL) return 1600;
 			
 			return 0;
+		}
+	}
+	
+	public void dropInventory(World world, BlockPos pos) {
+		for(int i = 0; i < this.inventory.getSlots(); i++) {
+			world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), this.inventory.getStackInSlot(i)));
 		}
 	}
 }

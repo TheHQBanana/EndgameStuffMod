@@ -1,11 +1,15 @@
 package com.hqbanana.endgamestuffmod.util.handlers;
 
+import com.hqbanana.endgamestuffmod.Main;
 import com.hqbanana.endgamestuffmod.init.ModBlocks;
 import com.hqbanana.endgamestuffmod.init.ModItems;
+import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 import com.hqbanana.endgamestuffmod.util.Reference;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod;
@@ -35,14 +39,15 @@ public class ModelHandler {
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_TERRIBLE).getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OKAY), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OKAY).getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_DECENT), 0,
-                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_DECENT).getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_EFFICIENT), 0,
-                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_EFFICIENT).getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_AMAZING), 0,
-                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_AMAZING).getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OVERKILL), 0,
-                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OVERKILL).getRegistryName(), "inventory"));
       //----------------Coal generators----------------//
+      //----------------Upgrades----------------//
+        NonNullList<ItemStack> list = NonNullList.create();
+        ModItems.GENERATOR_UPGRADE_SPEED.getSubItems(Main.ENDGAME_STUFF_TAB, list);
+        for (ItemStack itemStack : list) {
+        	System.out.println("Name: " + "_" + EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getTranslationKey());
+        	ModelLoader.setCustomModelResourceLocation(ModItems.GENERATOR_UPGRADE_SPEED, itemStack.getItemDamage(),
+        			new ModelResourceLocation(ModItems.GENERATOR_UPGRADE_SPEED.getRegistryName() + "_" + EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getTranslationKey(), "inventory"));
+        }
+        //----------------Upgrades----------------//
     }
 }
