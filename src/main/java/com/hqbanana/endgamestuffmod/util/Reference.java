@@ -12,5 +12,10 @@ public class Reference {
 	public static final int GUI_RUBY_FURNACE_ELECTRIC = 1;
 	
 	//Coal generator GUI
-	public static final int GUI_COAL_GENERATOR = 2;
+	public static final int GUI_COAL_GENERATOR_TERRIBLE = 2;
+	public static final int GUI_COAL_GENERATOR_OKAY = 3;
+	public static final int GUI_COAL_GENERATOR_DECENT = 4;
+	public static final int GUI_COAL_GENERATOR_EFFICIENT = 5;
+	public static final int GUI_COAL_GENERATOR_AMAZING = 6;
+	public static final int GUI_COAL_GENERATOR_OVERKILL = 7;
 }

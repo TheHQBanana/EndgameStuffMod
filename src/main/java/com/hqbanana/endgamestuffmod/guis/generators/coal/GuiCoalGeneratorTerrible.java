@@ -6,6 +6,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiCoalGeneratorTerrible extends GuiCoalGeneratorBase {
 	public GuiCoalGeneratorTerrible(InventoryPlayer player, TileEntityCoalGeneratorTerrible te) {
-		super(player, te, new ContainerCoalGeneratorTerrible(player, te), "coal/coal_generator_terrible");
+		super(player, te, new ContainerCoalGeneratorTerrible(player, te), "coal/coal_generator");
 	}
 }

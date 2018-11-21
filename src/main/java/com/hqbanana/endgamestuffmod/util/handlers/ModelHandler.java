@@ -33,6 +33,16 @@ public class ModelHandler {
       //----------------Coal generators----------------//
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_TERRIBLE), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_TERRIBLE).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OKAY), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OKAY).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_DECENT), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_DECENT).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_EFFICIENT), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_EFFICIENT).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_AMAZING), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_AMAZING).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OVERKILL), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OVERKILL).getRegistryName(), "inventory"));
       //----------------Coal generators----------------//
     }
 }

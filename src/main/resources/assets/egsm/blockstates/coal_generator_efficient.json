@@ -1,0 +1,13 @@
+{
+    "variants":
+    {
+        "burning=false,facing=north": { "model": "egsm:coal_generator_efficient" },
+        "burning=false,facing=east": { "model": "egsm:coal_generator_efficient", "y": 90 },
+        "burning=false,facing=south": { "model": "egsm:coal_generator_efficient", "y": 180 },
+        "burning=false,facing=west": { "model": "egsm:coal_generator_efficient", "y": 270 },
+        "burning=true,facing=north": { "model": "egsm:lit_coal_generator_efficient" },
+        "burning=true,facing=east": { "model": "egsm:lit_coal_generator_efficient", "y": 90 },
+        "burning=true,facing=south": { "model": "egsm:lit_coal_generator_efficient", "y": 180 },
+        "burning=true,facing=west": { "model": "egsm:lit_coal_generator_efficient", "y": 270 }
+    }
+}
