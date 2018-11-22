@@ -13,11 +13,13 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 			@Override
 			protected void onContentsChanged(int slot) {
 				super.onContentsChanged(slot);
-				if (slot > 0) {
-					ItemStack itemStack = this.getStackInSlot(slot);
-					int modifier = EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getUpgradeValue();
-					TileEntityCoalGeneratorAdvanced.this.speedUpgradeModifier = modifier;
-					TileEntityCoalGeneratorAdvanced.this.modifyMaxEnergy((int)Math.pow(modifier, 2));
+				switch(slot) {
+				case 1:
+					TileEntityCoalGeneratorAdvanced.this.updateSpeedModifier(slot);
+					break;
+				case 2: 
+					TileEntityCoalGeneratorAdvanced.this.updateEfficiencyModifier(slot);
+					break;
 				}
 				TileEntityCoalGeneratorAdvanced.this.markDirty();
 			};
@@ -25,6 +27,7 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 	}
 	
 	public int speedUpgradeModifier = 0, efficiencyUpgradeModifier = 0;
+	private ItemStack currentSpeedUpgrade = null, currentEfficiencyUpgrade = null;
 	
 	@Override
 	public void update() {
@@ -62,5 +65,31 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 		super.readFromNBT(compound);
 		this.speedUpgradeModifier = compound.getInteger("SpeedUpgradeModifier");
 		this.efficiencyUpgradeModifier = compound.getInteger("EfficiencyUpgradeModifier");
+	}
+	
+	private void updateSpeedModifier(int slot) {
+		ItemStack itemStack = this.inventory.getStackInSlot(slot);
+		if (!itemStack.isEmpty()) {
+			int speedModifier = EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getUpgradeValueSpeed();
+			speedUpgradeModifier = speedModifier;
+			modifyMaxEnergy((int)Math.pow(speedModifier, 2), false);
+			currentSpeedUpgrade = itemStack;
+		} else if (itemStack.isEmpty() && currentSpeedUpgrade != null) {
+			modifyMaxEnergy((int)Math.pow(EnumUpgrade.byUpgradeDamage(currentSpeedUpgrade.getMetadata()).getUpgradeValueSpeed(), 2), true);
+			currentSpeedUpgrade = null;
+			if (getEnergyStored() > getMaxEnergyStored()) internalExtractEnergy((getEnergyStored() - getMaxEnergyStored()), false);
+		}
+	}
+	
+	private void updateEfficiencyModifier(int slot) {
+		ItemStack itemStack = this.inventory.getStackInSlot(slot);
+		if (!itemStack.isEmpty()) {
+			int efficiencyModifier = EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getUpgradeValueEfficiency();
+			efficiencyUpgradeModifier = efficiencyModifier;
+			currentEfficiencyUpgrade = itemStack;
+		} else if (itemStack.isEmpty() && currentEfficiencyUpgrade != null) {
+			currentEfficiencyUpgrade = null;
+			efficiencyUpgradeModifier = 0;
+		}
 	}
 }

@@ -8,6 +8,7 @@ import com.hqbanana.endgamestuffmod.blocks.BlockRubyFurnaceElectric;
 import com.hqbanana.endgamestuffmod.blocks.BlockRubyOre;
 import com.hqbanana.endgamestuffmod.blocks.generators.coal.BlockCoalGeneratorAdvanced;
 import com.hqbanana.endgamestuffmod.blocks.generators.coal.BlockCoalGeneratorSimple;
+import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherStar;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,6 +23,9 @@ public class ModBlocks {
 	public static final Block RUBY_FURNACE_ELECTRIC = new BlockRubyFurnaceElectric("ruby_furnace_electric", Material.ROCK);
 	
 	//Coal generators
-	public static final Block COAL_GENERATOR_TERRIBLE = new BlockCoalGeneratorSimple("coal_generator_simple", Material.IRON);
-	public static final Block COAL_GENERATOR_OKAY = new BlockCoalGeneratorAdvanced("coal_generator_advanced", Material.IRON);
+	public static final Block COAL_GENERATOR_SIMPLE = new BlockCoalGeneratorSimple("coal_generator_simple", Material.IRON);
+	public static final Block COAL_GENERATOR_ADVANCED = new BlockCoalGeneratorAdvanced("coal_generator_advanced", Material.IRON);
+	
+	//Materials
+	public static final Block NETHER_STAR_BLOCK = new BlockNetherStar("nether_star_block", Material.ROCK);
 	}

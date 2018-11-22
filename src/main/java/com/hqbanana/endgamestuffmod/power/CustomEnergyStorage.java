@@ -85,9 +85,12 @@ public class CustomEnergyStorage extends TileEntityBase implements IEnergyStorag
     	return maxReceive;
     }
     
-    public void modifyMaxEnergy(int modifier) {
-    	this.maxEnergy *= modifier;
+    public void modifyMaxEnergy(int modifier, boolean divide) {
+    	System.out.println("modifier: " + modifier + ", divide: " + divide);
+    	if (!divide) this.maxEnergy *= modifier;
+    	else this.maxEnergy /= modifier;
     }
+
     
     @Override
     public boolean canExtract() {

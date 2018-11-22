@@ -25,18 +25,18 @@ public class BlockCoalGeneratorSimple extends BlockCoalGeneratorBase {
 	
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_TERRIBLE);
+		return Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_SIMPLE);
 	}
 	
 	@Override
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(ModBlocks.COAL_GENERATOR_TERRIBLE);
+		return new ItemStack(ModBlocks.COAL_GENERATOR_SIMPLE);
 	}
 	
 	public static void setState(boolean active, World worldIn, BlockPos pos) {
 		IBlockState state = worldIn.getBlockState(pos);
 		TileEntity te = worldIn.getTileEntity(pos);
-		worldIn.setBlockState(pos,  ModBlocks.COAL_GENERATOR_TERRIBLE.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(BURNING, active), 3);
+		worldIn.setBlockState(pos,  ModBlocks.COAL_GENERATOR_SIMPLE.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(BURNING, active), 3);
 		
 		if(te != null) {
 			te.validate();

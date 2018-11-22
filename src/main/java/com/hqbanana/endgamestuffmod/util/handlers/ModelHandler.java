@@ -21,7 +21,6 @@ public class ModelHandler {
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-    	System.out.println("MODEL REGISTRY BEING EXECUTED!!");
     	//----------------Reference items----------------//
         ModelLoader.setCustomModelResourceLocation(ModItems.RUBY, 0,
                 new ModelResourceLocation(ModItems.RUBY.getRegistryName(), "inventory"));
@@ -35,19 +34,29 @@ public class ModelHandler {
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_ORE).getRegistryName(), "inventory"));
       //----------------Reference items----------------//
       //----------------Coal generators----------------//
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_TERRIBLE), 0,
-                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_TERRIBLE).getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OKAY), 0,
-                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_OKAY).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_SIMPLE), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_SIMPLE).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_ADVANCED), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_ADVANCED).getRegistryName(), "inventory"));
       //----------------Coal generators----------------//
       //----------------Upgrades----------------//
-        NonNullList<ItemStack> list = NonNullList.create();
-        ModItems.GENERATOR_UPGRADE_SPEED.getSubItems(Main.ENDGAME_STUFF_TAB, list);
-        for (ItemStack itemStack : list) {
-        	System.out.println("Name: " + "_" + EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getTranslationKey());
+        NonNullList<ItemStack> listSpeed = NonNullList.create();
+        ModItems.GENERATOR_UPGRADE_SPEED.getSubItems(Main.ENDGAME_STUFF_TAB, listSpeed);
+        for (ItemStack itemStack : listSpeed) {
         	ModelLoader.setCustomModelResourceLocation(ModItems.GENERATOR_UPGRADE_SPEED, itemStack.getItemDamage(),
         			new ModelResourceLocation(ModItems.GENERATOR_UPGRADE_SPEED.getRegistryName() + "_" + EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getTranslationKey(), "inventory"));
         }
-        //----------------Upgrades----------------//
+        
+        NonNullList<ItemStack> listEfficiency = NonNullList.create();
+        ModItems.GENERATOR_UPGRADE_EFFICIENCY.getSubItems(Main.ENDGAME_STUFF_TAB, listEfficiency);
+        for (ItemStack itemStack : listEfficiency) {
+        	ModelLoader.setCustomModelResourceLocation(ModItems.GENERATOR_UPGRADE_EFFICIENCY, itemStack.getItemDamage(),
+        			new ModelResourceLocation(ModItems.GENERATOR_UPGRADE_EFFICIENCY.getRegistryName() + "_" + EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getTranslationKey(), "inventory"));
+        }
+      //----------------Upgrades----------------//
+      //----------------Materials----------------//
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.NETHER_STAR_BLOCK), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.NETHER_STAR_BLOCK).getRegistryName(), "inventory"));
+      //----------------Materials----------------//
     }
 }

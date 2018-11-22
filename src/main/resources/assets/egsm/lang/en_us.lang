@@ -1,5 +1,13 @@
 //Items
 item.ruby.name=Ruby
+item.generator_upgrade_efficiency.iron.name=Iron efficiency upgrade
+item.generator_upgrade_efficiency.gold.name=Gold efficiency upgrade
+item.generator_upgrade_efficiency.diamond.name=Diamond efficiency upgrade
+item.generator_upgrade_efficiency.nether.name=Nether efficiency upgrade
+item.generator_upgrade_speed.iron.name=Iron speed upgrade
+item.generator_upgrade_speed.gold.name=Gold speed upgrade
+item.generator_upgrade_speed.diamond.name=Diamond speed upgrade
+item.generator_upgrade_speed.nether.name=Nether speed upgrade
 
 //Blocks
 tile.ruby_block.name=Ruby block

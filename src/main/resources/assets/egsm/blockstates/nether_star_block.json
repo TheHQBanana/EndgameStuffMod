@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model": "egsm:nether_star_block" }
+    }
+}

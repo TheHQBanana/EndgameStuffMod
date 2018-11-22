@@ -1,7 +1,5 @@
 package com.hqbanana.endgamestuffmod.containers;
 
-import com.hqbanana.endgamestuffmod.containers.slots.SlotUpgrade;
-import com.hqbanana.endgamestuffmod.containers.slots.SlotRubyFurnaceOutput;
 import com.hqbanana.endgamestuffmod.recipes.RubyFurnaceRecipes;
 import com.hqbanana.endgamestuffmod.tileentities.TileEntityRubyFurnace;
 
@@ -16,7 +14,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import scala.Console;
 
 public class ContainerRubyFurnace extends Container {
 	private final TileEntityRubyFurnace te;
