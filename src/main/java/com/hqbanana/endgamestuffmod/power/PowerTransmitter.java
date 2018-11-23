@@ -14,7 +14,7 @@ public class PowerTransmitter {
 		this.bp = bp;
 	}
 	
-	public void transmitEnergy (World world, CustomEnergyStorage ces) {
+	public void transmitEnergy (World world, EnergyStorageBase ces) {
 		int powerToTransmit = Math.min(ces.getMaxEnergyExtract(), ces.getEnergyStored());
 		if (powerToTransmit > 0) {
 			IEnergyStorage[] handlers = new IEnergyStorage[6];

@@ -13,9 +13,13 @@ item.generator_upgrade_speed.nether.name=Nether speed upgrade
 tile.ruby_block.name=Ruby block
 tile.ruby_ore.name=Ruby ore
 tile.ruby_furnace.name=Ruby furnace
+tile.nether_star_block.name = Nether star block
 tile.ruby_furnace_electric.name=Electric ruby furnace
 tile.coal_generator_simple.name=Simple coal generator
 tile.coal_generator_advanced.name=Advanced coal generator
+tile.magma_generator_simple.name=Simple magma generator
+tile.magma_generator_advanced.name=Advanced magma generator
+tile.wither_factory.name=Wither factory
 
 //Tabs
 itemGroup.endgamestufftab=Endgame stuff

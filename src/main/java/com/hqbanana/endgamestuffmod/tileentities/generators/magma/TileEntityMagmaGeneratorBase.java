@@ -1,37 +1,43 @@
-package com.hqbanana.endgamestuffmod.tileentities.generators.coal;
+package com.hqbanana.endgamestuffmod.tileentities.generators.magma;
 
 import com.hqbanana.endgamestuffmod.tileentities.generators.TileEntityGeneratorBase;
-
-import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase {
-	public TileEntityCoalGeneratorBase(String name, int maxPower, int maxIn, int maxOut, int energy) {
+public class TileEntityMagmaGeneratorBase extends TileEntityGeneratorBase {
+	protected FluidTank fluidTank = new FluidTank(2000) {
+		@Override
+		protected void onContentsChanged() {
+			super.onContentsChanged();
+			TileEntityMagmaGeneratorBase.this.markDirty();
+		};
+	};
+	
+	public TileEntityMagmaGeneratorBase(String name, int maxPower, int maxIn, int maxOut, int energy) {
 		super(name, maxPower, maxIn, maxOut, energy);
 	}
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return true;
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
 		return super.hasCapability(capability, facing);
 	}
 	
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return (T) this.inventory;
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return (T) this.fluidTank;
 		return super.getCapability(capability, facing);
 	}
 	
@@ -39,6 +45,7 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound = super.writeToNBT(compound);
 		compound.setTag("Inventory", this.inventory.serializeNBT());
+		compound.setTag("FluidTank", this.fluidTank.writeToNBT(new NBTTagCompound()));
 		return compound;
 	}
 	
@@ -46,13 +53,14 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
+		this.fluidTank.readFromNBT(compound.getCompoundTag("FluidTank"));
 	}
 	
 	@Override
 	public void update() {
 		if (!this.world.isRemote) {
-			if (!this.inventory.getStackInSlot(0).isEmpty()) {
-				int burnTime = getItemBurnTime(this.inventory.getStackInSlot(0));
+			if (this.fluidTank.getFluidAmount() >= 1000) {
+				int burnTime = getFluidBurnTime(this.fluidTank.getFluid());
 				if (totalBurnTime == 0 && burnTime > 0) {
 					totalBurnTime = burnTime; 
 					burnFuel();
@@ -73,27 +81,27 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase {
 	
 	@Override
 	protected void burnFuel() {
-		this.inventory.getStackInSlot(0).shrink(1);
+		this.fluidTank.drainInternal(1000, true);
 	}
 	
-	public static int getItemBurnTime(ItemStack fuel) {
-		if (fuel.isEmpty()) return 0;
+	public static int getFluidBurnTime(FluidStack fluidStack) {
+		if (fluidStack.amount <= 0) return 0;
 		else {
-			Item item = fuel.getItem();
-			if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.AIR) {
-				Block block = Block.getBlockFromItem(item);
-				if (block == Blocks.COAL_BLOCK) return 16000;
-			}
-			
-			if (item == Items.COAL) return 1600;
-			
+			Fluid fluid = fluidStack.getFluid();
+			if (fluid == FluidRegistry.LAVA) return 20000;
 			return 0;
 		}
 	}
 	
 	public void dropInventory(World world, BlockPos pos) {
-		for(int i = 0; i < this.inventory.getSlots(); i++) {
-			world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), this.inventory.getStackInSlot(i)));
-		}
+
+	}
+	
+	public int getFluidAmountStored() {
+		return this.fluidTank.getFluidAmount();
+	}
+	
+	public int getMaxFluidAmountStored() {
+		return this.fluidTank.getCapacity();
 	}
 }

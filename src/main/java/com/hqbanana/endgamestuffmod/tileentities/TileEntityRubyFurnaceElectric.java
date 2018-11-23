@@ -1,6 +1,6 @@
 package com.hqbanana.endgamestuffmod.tileentities;
 
-import com.hqbanana.endgamestuffmod.power.CustomEnergyStorage;
+import com.hqbanana.endgamestuffmod.power.EnergyStorageBase;
 import com.hqbanana.endgamestuffmod.recipes.RubyFurnaceRecipes;
 
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +14,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityRubyFurnaceElectric extends CustomEnergyStorage implements ITickable {
+public class TileEntityRubyFurnaceElectric extends EnergyStorageBase implements ITickable {
 	private ItemStackHandler handler = new ItemStackHandler(3) {
 		@Override
 		protected void onContentsChanged(int slot) {

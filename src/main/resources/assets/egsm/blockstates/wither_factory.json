@@ -1,0 +1,13 @@
+{
+    "variants":
+    {
+        "active=false,facing=north": { "model": "egsm:wither_factory" },
+        "active=false,facing=east": { "model": "egsm:wither_factory", "y": 90 },
+        "active=false,facing=south": { "model": "egsm:wither_factory", "y": 180 },
+        "active=false,facing=west": { "model": "egsm:wither_factory", "y": 270 },
+        "active=true,facing=north": { "model": "egsm:active_wither_factory" },
+        "active=true,facing=east": { "model": "egsm:active_wither_factory", "y": 90 },
+        "active=true,facing=south": { "model": "egsm:active_wither_factory", "y": 180 },
+        "active=true,facing=west": { "model": "egsm:active_wither_factory", "y": 270 }
+    }
+}

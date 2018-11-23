@@ -32,14 +32,20 @@ public class ModelHandler {
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_FURNACE_ELECTRIC).getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_ORE), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.RUBY_ORE).getRegistryName(), "inventory"));
-      //----------------Reference items----------------//
-      //----------------Coal generators----------------//
+        //----------------Reference items----------------//
+        //----------------Coal generators----------------//
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_SIMPLE), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_SIMPLE).getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_ADVANCED), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.COAL_GENERATOR_ADVANCED).getRegistryName(), "inventory"));
-      //----------------Coal generators----------------//
-      //----------------Upgrades----------------//
+        //----------------Coal generators----------------//
+        //----------------Magma generators----------------//
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.MAGMA_GENERATOR_SIMPLE), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.MAGMA_GENERATOR_SIMPLE).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.MAGMA_GENERATOR_ADVANCED), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.MAGMA_GENERATOR_ADVANCED).getRegistryName(), "inventory"));
+        //----------------Magma generators----------------//
+        //----------------Upgrades----------------//
         NonNullList<ItemStack> listSpeed = NonNullList.create();
         ModItems.GENERATOR_UPGRADE_SPEED.getSubItems(Main.ENDGAME_STUFF_TAB, listSpeed);
         for (ItemStack itemStack : listSpeed) {
@@ -53,10 +59,14 @@ public class ModelHandler {
         	ModelLoader.setCustomModelResourceLocation(ModItems.GENERATOR_UPGRADE_EFFICIENCY, itemStack.getItemDamage(),
         			new ModelResourceLocation(ModItems.GENERATOR_UPGRADE_EFFICIENCY.getRegistryName() + "_" + EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getTranslationKey(), "inventory"));
         }
-      //----------------Upgrades----------------//
-      //----------------Materials----------------//
+        //----------------Upgrades----------------//
+        //----------------Materials----------------//
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.NETHER_STAR_BLOCK), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.NETHER_STAR_BLOCK).getRegistryName(), "inventory"));
-      //----------------Materials----------------//
+        //----------------Materials----------------//
+        //----------------Machines----------------//
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.WITHER_FACTORY), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.WITHER_FACTORY).getRegistryName(), "inventory"));
+        //----------------Machines----------------//
     }
 }

@@ -8,15 +8,15 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class CustomEnergyStorage extends TileEntityBase implements IEnergyStorage {
-	public CustomEnergyStorage(String name, int maxPower, int maxIn, int maxOut) {
+public class EnergyStorageBase extends TileEntityBase implements IEnergyStorage {
+	public EnergyStorageBase(String name, int maxPower, int maxIn, int maxOut) {
 		super(name);
 		this.maxEnergy = maxPower;
     	this.maxReceive = maxIn;
     	this.maxExtract = maxOut;
     }
 
-	public CustomEnergyStorage(String name, int maxPower, int maxIn, int maxOut, int energy) {
+	public EnergyStorageBase(String name, int maxPower, int maxIn, int maxOut, int energy) {
     	super(name);
     	this.maxEnergy = maxPower;
     	this.maxReceive = maxIn;

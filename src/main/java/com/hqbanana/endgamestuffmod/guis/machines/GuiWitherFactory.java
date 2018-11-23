@@ -1,10 +1,10 @@
-package com.hqbanana.endgamestuffmod.guis.generators;
+package com.hqbanana.endgamestuffmod.guis.machines;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hqbanana.endgamestuffmod.containers.generators.ContainerGeneratorBase;
-import com.hqbanana.endgamestuffmod.tileentities.generators.TileEntityGeneratorBase;
+import com.hqbanana.endgamestuffmod.containers.machines.ContainerWitherFactory;
+import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityWitherFactory;
 import com.hqbanana.endgamestuffmod.util.GuiHelper;
 import com.hqbanana.endgamestuffmod.util.Reference;
 
@@ -14,23 +14,23 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
-public class GuiGeneratorBase extends GuiContainer {
-	protected ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/gui/generators/coal/coal_generator_simple.png");
+public class GuiWitherFactory extends GuiContainer {
+	protected ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/gui/machines/wither_factory.png");
 	protected final InventoryPlayer player;
-	protected final TileEntityGeneratorBase te;
+	protected final TileEntityWitherFactory te;
 	
-	public GuiGeneratorBase(InventoryPlayer player, TileEntityGeneratorBase te, ContainerGeneratorBase cgb, String guiPath) {
-		super(cgb);
+	public GuiWitherFactory(InventoryPlayer player, TileEntityWitherFactory te, ContainerWitherFactory cwf, String guiPath) {
+		super(cwf);
 		this.player = player;
 		this.te = te;
-		this.TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/gui/generators/" + guiPath + ".png");
+		this.TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/gui/machines/" + guiPath + ".png");
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 		this.mc.getTextureManager().bindTexture(TEXTURES);
-		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, 196, this.ySize);
 		drawBars();
 	}
 	
@@ -38,13 +38,12 @@ public class GuiGeneratorBase extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String tileName = this.te.getDisplayName().getUnformattedText();
 		this.fontRenderer.drawString(tileName, (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2), 8, 4210752);
-		this.fontRenderer.drawString(this.player.getDisplayName().getUnformattedText(), 122, this.ySize - 96 + 2, 4210752);
 		drawPowerHover(mouseX, mouseY);
 	}
 	
-	protected int getBurnProgressScaled(int pixels) {
-		int i = this.te.getCurrentBurnTime();
-		int j = this.te.getTotalBurnTime();
+	protected int getWitherProgressScaled(int pixels) {
+		int i = this.te.getCurrentProgressTime();
+		int j = this.te.getTotalProgressTime();
 		return i != 0 && j != 0 ? i * pixels / j : 0;
 	}
 	
@@ -55,15 +54,15 @@ public class GuiGeneratorBase extends GuiContainer {
 	}
 	
 	protected void drawBars() {
-		int l = this.getBurnProgressScaled(13);
-		this.drawTexturedModalRect(this.guiLeft + 80, this.guiTop + 32 + 12 - l, 196, 13 - l, 14, l + 1);
+		int l = this.getWitherProgressScaled(24);
+		this.drawTexturedModalRect(this.guiLeft + 99, this.guiTop + 36, 196, 59, l + 1, 17);
 		
 		int k = this.getEnergyStoredScaled(59);
-		this.drawTexturedModalRect(this.guiLeft + 151, this.guiTop + 17 + 59 - k, 196, 73 - k, 16, k + 1);
+		this.drawTexturedModalRect(this.guiLeft + 10, this.guiTop + 15 + 59 - k, 196, 58 - k, 16, k + 1);
 	}
 	
 	protected void drawPowerHover(int mouseX, int mouseY) {
-		if (GuiHelper.isMouseInRect(this.guiLeft + 151, this.guiTop + 14, 16, 59, mouseX, mouseY)) {
+		if (GuiHelper.isMouseInRect(this.guiLeft + 10, this.guiTop + 15, 16, 59, mouseX, mouseY)) {
 			int k = (this.width - this.xSize) / 2;
 			int l = (this.height - this.ySize) / 2;
 			List<String> list = new ArrayList<String>();

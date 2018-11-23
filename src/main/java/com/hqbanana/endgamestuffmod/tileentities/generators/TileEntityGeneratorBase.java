@@ -1,11 +1,22 @@
 package com.hqbanana.endgamestuffmod.tileentities.generators;
 
-import com.hqbanana.endgamestuffmod.power.CustomEnergyStorage;
+import com.hqbanana.endgamestuffmod.power.EnergyStorageBase;
 import com.hqbanana.endgamestuffmod.power.PowerTransmitter;
+import com.hqbanana.endgamestuffmod.tileentities.generators.coal.TileEntityCoalGeneratorBase;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ITickable;
+import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityGeneratorBase extends CustomEnergyStorage {
+public class TileEntityGeneratorBase extends EnergyStorageBase implements ITickable {
+	protected ItemStackHandler inventory = new ItemStackHandler(2) {
+		@Override
+		protected void onContentsChanged(int slot) {
+			super.onContentsChanged(slot);
+			TileEntityGeneratorBase.this.markDirty();
+		};
+	};
+	
 	public TileEntityGeneratorBase(String name, int maxPower, int maxIn, int maxOut, int energy) {
 		super(name, maxPower, maxIn, maxOut, energy);
 	}
@@ -50,6 +61,11 @@ public class TileEntityGeneratorBase extends CustomEnergyStorage {
 	}
 	
 	protected void burnFuel() {
+		
+	}
+
+	@Override
+	public void update() {
 		
 	}
 }

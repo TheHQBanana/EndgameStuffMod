@@ -36,7 +36,6 @@ public class GuiRubyFurnace extends GuiContainer {
 		
 		if (TileEntityRubyFurnace.isBurning(te)) {
 			int k = this.getBurnLeftScaled(13);
-			//Console.println("K: " + k);
 			this.drawTexturedModalRect(this.guiLeft + 57, this.guiTop + 37 + 12 - k, 176, 12 - k, 14, k + 1);
 		}
 		

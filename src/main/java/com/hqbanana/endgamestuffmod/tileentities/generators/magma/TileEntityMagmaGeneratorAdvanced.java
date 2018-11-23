@@ -1,30 +1,41 @@
-package com.hqbanana.endgamestuffmod.tileentities.generators.coal;
+package com.hqbanana.endgamestuffmod.tileentities.generators.magma;
 
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase {
-	public TileEntityCoalGeneratorAdvanced() {
-		super("Advanced coal generator", 200000, 0, 100, 0);
-		inventory = new ItemStackHandler(3) {
+public class TileEntityMagmaGeneratorAdvanced extends TileEntityMagmaGeneratorBase {
+	public TileEntityMagmaGeneratorAdvanced() {
+		super("Advanced magma generator", 5000000, 0, 500000, 0);
+		fluidTank = new FluidTank(8000) {
+			@Override
+			protected void onContentsChanged() {
+				super.onContentsChanged();
+				TileEntityMagmaGeneratorAdvanced.this.markDirty();
+			};
+		};
+		
+		inventory = new ItemStackHandler(2) {
 			@Override
 			protected void onContentsChanged(int slot) {
 				super.onContentsChanged(slot);
 				switch(slot) {
-				case 1:
-					TileEntityCoalGeneratorAdvanced.this.updateSpeedModifier(slot);
+				case 0:
+					TileEntityMagmaGeneratorAdvanced.this.updateSpeedModifier(slot);
 					break;
-				case 2: 
-					TileEntityCoalGeneratorAdvanced.this.updateEfficiencyModifier(slot);
+				case 1: 
+					TileEntityMagmaGeneratorAdvanced.this.updateEfficiencyModifier(slot);
 					break;
 				}
-				TileEntityCoalGeneratorAdvanced.this.markDirty();
+				TileEntityMagmaGeneratorAdvanced.this.markDirty();
 			};
 		};
-		rfPerTick = 40;
+		
+		fluidTank.setCanDrain(false);
+		rfPerTick = 80;
 	}
 	
 	public int speedUpgradeModifier = 0, efficiencyUpgradeModifier = 0;
@@ -33,13 +44,13 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 	@Override
 	public void update() {
 		if (!this.world.isRemote) {
-			if (!this.inventory.getStackInSlot(0).isEmpty() || currentBurnTime > 0) {
-				int burnTime = getItemBurnTime(this.inventory.getStackInSlot(0));
+			if (this.fluidTank.getFluidAmount() >= 1000) {
+				int burnTime = getFluidBurnTime(this.fluidTank.getFluid());
 				if (totalBurnTime == 0 && burnTime > 0) {
 					totalBurnTime = burnTime; 
 					burnFuel();
 				}
-				if (currentBurnTime < totalBurnTime && this.getEnergyStored() < this.getMaxEnergyStored()) {// && burnTime > 0) {
+				if (currentBurnTime < totalBurnTime && this.getEnergyStored() < this.getMaxEnergyStored() && burnTime > 0) {
 					internalReceiveEnergy(Math.max(rfPerTick, (rfPerTick * (int)Math.pow(speedUpgradeModifier, 2))), false);
 					currentBurnTime += Math.max(1, (Math.pow(speedUpgradeModifier, 2) - Math.pow(efficiencyUpgradeModifier, 2)));
 				} else if (currentBurnTime >= totalBurnTime && currentBurnTime != 0 && totalBurnTime != 0) {
@@ -73,13 +84,14 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 		if (!itemStack.isEmpty()) {
 			int speedModifier = EnumUpgrade.byUpgradeDamage(itemStack.getMetadata()).getUpgradeValueSpeed();
 			speedUpgradeModifier = speedModifier;
-			modifyMaxEnergy((int)Math.pow(speedModifier, 2), false);
+			//modifyMaxEnergy((int)Math.pow(speedModifier, 2), false);
+			//CREATE UPGRADE SPECIFICALLY FOR UPGRADING ENERGY STORAGE!
 			currentSpeedUpgrade = itemStack;
 		} else if (itemStack.isEmpty() && currentSpeedUpgrade != null) {
-			modifyMaxEnergy((int)Math.pow(EnumUpgrade.byUpgradeDamage(currentSpeedUpgrade.getMetadata()).getUpgradeValueSpeed(), 2), true);
+			//modifyMaxEnergy((int)Math.pow(EnumUpgrade.byUpgradeDamage(currentSpeedUpgrade.getMetadata()).getUpgradeValueSpeed(), 2), true);
 			currentSpeedUpgrade = null;
 			speedUpgradeModifier = 0;
-			if (getEnergyStored() > getMaxEnergyStored()) internalExtractEnergy((getEnergyStored() - getMaxEnergyStored()), false);
+			//if (getEnergyStored() > getMaxEnergyStored()) internalExtractEnergy((getEnergyStored() - getMaxEnergyStored()), false);
 		}
 	}
 	

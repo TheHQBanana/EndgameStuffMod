@@ -14,4 +14,11 @@ public class Reference {
 	//Coal generator GUI
 	public static final int GUI_COAL_GENERATOR_SIMPLE = 2;
 	public static final int GUI_COAL_GENERATOR_ADVANCED = 3;
+	
+	//Magma generator GUI
+	public static final int GUI_MAGMA_GENERATOR_SIMPLE = 4;
+	public static final int GUI_MAGMA_GENERATOR_ADVANCED = 5;
+	
+	//Machine GUI
+	public static final int GUI_WITHER_FACTORY = 6;
 }
