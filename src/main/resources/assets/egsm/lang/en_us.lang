@@ -20,6 +20,7 @@ tile.coal_generator_advanced.name=Advanced coal generator
 tile.magma_generator_simple.name=Simple magma generator
 tile.magma_generator_advanced.name=Advanced magma generator
 tile.wither_factory.name=Wither factory
+tile.dragon_breath_factory.name=Dragonbreath factory
 
 //Tabs
 itemGroup.endgamestufftab=Endgame stuff
@@ -27,3 +28,6 @@ itemGroup.endgamestufftab=Endgame stuff
 //Containers
 container.ruby_furnace=Ruby furnace
 container.ruby_furnace_electric=Electric ruby furnace
+
+//Liquids
+fluid.liquid_xp=Liquid XP

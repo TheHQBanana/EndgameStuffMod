@@ -21,4 +21,5 @@ public class Reference {
 	
 	//Machine GUI
 	public static final int GUI_WITHER_FACTORY = 6;
+	public static final int GUI_DRAGON_BREATH_FACTORY = 7;
 }

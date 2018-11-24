@@ -17,7 +17,7 @@ public class PowerTransmitter {
 	public void transmitEnergy (World world, EnergyStorageBase ces) {
 		int powerToTransmit = Math.min(ces.getMaxEnergyExtract(), ces.getEnergyStored());
 		if (powerToTransmit > 0) {
-			IEnergyStorage[] handlers = new IEnergyStorage[6];
+			EnergyStorageBase[] handlers = new EnergyStorageBase[6];
 			int[] wantedSide = new int[6];
 			int accepted = 0;
 			for (EnumFacing neighbour : EnumFacing.VALUES) {
@@ -26,9 +26,9 @@ public class PowerTransmitter {
 				
 				if (te == null) continue;
 				
-				IEnergyStorage handler = null;
+				EnergyStorageBase handler = null;
 				if (te.hasCapability(CapabilityEnergy.ENERGY, from)) {
-					handler = te.getCapability(CapabilityEnergy.ENERGY, from);
+					handler = (EnergyStorageBase)te.getCapability(CapabilityEnergy.ENERGY, from);
 					if (!handler.canReceive()) handler = null;
 				}
 				
@@ -42,13 +42,13 @@ public class PowerTransmitter {
 			
 			if (accepted > 0) {
 				for (EnumFacing from : EnumFacing.VALUES) {
-					IEnergyStorage handler = handlers[from.ordinal()];
+					EnergyStorageBase handler = handlers[from.ordinal()];
 					int wanted = wantedSide[from.ordinal()];
 					if (handler == null || wanted == 0) continue;
-					
-					int transmit = Math.min(Math.min(ces.getEnergyStored(), wanted), wanted * accepted / powerToTransmit);
+			
+					int transmit = Math.max(Math.min(ces.getEnergyStored(), wanted), wanted * accepted / Math.min(powerToTransmit, (handler.getMaxEnergyStored() - handler.getEnergyStored())));
 					int received = Math.min(transmit, handler.receiveEnergy(transmit, false));
-					ces.internalExtractEnergy(transmit, false);
+					ces.internalExtractEnergy(received, false);
 					if (ces.getEnergyStored() <= 0) break;
 				}
 			}

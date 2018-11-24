@@ -2,13 +2,13 @@ package com.hqbanana.endgamestuffmod.util.handlers;
 
 import com.hqbanana.endgamestuffmod.Main;
 import com.hqbanana.endgamestuffmod.init.ModBlocks;
+import com.hqbanana.endgamestuffmod.init.ModFluids;
 import com.hqbanana.endgamestuffmod.init.ModItems;
 import com.hqbanana.endgamestuffmod.init.ModRecipes;
 import com.hqbanana.endgamestuffmod.world.ModWorldGen;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,7 +29,9 @@ public class RegistryHandler {
 	}
 	
 	public static void preInitRegistries() {
+		ModFluids.registerFluids();
 		GameRegistry.registerWorldGenerator(new ModWorldGen(), 3);
+		RenderHandler.registerCustomMeshesAndStates();
 	}
 	
 	public static void initRegistries() {

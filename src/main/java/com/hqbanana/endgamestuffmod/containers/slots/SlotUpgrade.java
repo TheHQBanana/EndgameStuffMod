@@ -14,7 +14,7 @@ public class SlotUpgrade extends SlotItemHandler {
 	
 	public SlotUpgrade(IItemHandler itemHandler, int index, int xPosition, int yPosition, ResourceLocation emptySlotBackgroundLocation, String emptySlotName) {
 		super(itemHandler, index, xPosition, yPosition);
-		this.setBackgroundLocation(emptySlotBackgroundLocation);
+		this.setBackgroundLocation(emptySlotBackgroundLocation);	
 		this.setBackgroundName(emptySlotName);
 	}
 	
@@ -25,6 +25,11 @@ public class SlotUpgrade extends SlotItemHandler {
 	
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
+		return 1;
+	}
+	
+	@Override
+	public int getSlotStackLimit() {
 		return 1;
 	}
 }

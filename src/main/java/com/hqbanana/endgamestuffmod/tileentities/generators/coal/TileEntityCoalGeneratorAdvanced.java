@@ -1,29 +1,34 @@
 package com.hqbanana.endgamestuffmod.tileentities.generators.coal;
 
+import com.hqbanana.endgamestuffmod.inventories.InventoryBase;
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase {
+	protected InventoryBase inventory = new InventoryBase(3) {
+		@Override
+		protected void onContentsChanged(int slot) {
+			super.onContentsChanged(slot);
+			switch(slot) {
+			case 1:
+				TileEntityCoalGeneratorAdvanced.this.updateSpeedModifier(slot);
+				break;
+			case 2: 
+				TileEntityCoalGeneratorAdvanced.this.updateEfficiencyModifier(slot);
+				break;
+			}
+			TileEntityCoalGeneratorAdvanced.this.markDirty();
+		};
+	};
+	
 	public TileEntityCoalGeneratorAdvanced() {
 		super("Advanced coal generator", 200000, 0, 100, 0);
-		inventory = new ItemStackHandler(3) {
-			@Override
-			protected void onContentsChanged(int slot) {
-				super.onContentsChanged(slot);
-				switch(slot) {
-				case 1:
-					TileEntityCoalGeneratorAdvanced.this.updateSpeedModifier(slot);
-					break;
-				case 2: 
-					TileEntityCoalGeneratorAdvanced.this.updateEfficiencyModifier(slot);
-					break;
-				}
-				TileEntityCoalGeneratorAdvanced.this.markDirty();
-			};
-		};
 		rfPerTick = 40;
 	}
 	
@@ -58,6 +63,7 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 		compound = super.writeToNBT(compound);
 		compound.setInteger("SpeedUpgradeModifier", this.speedUpgradeModifier);
 		compound.setInteger("EfficiencyUpgradeModifier", this.efficiencyUpgradeModifier);
+		compound.setTag("Inventory", this.inventory.serializeNBT());
 		return compound;
 	}
 	
@@ -66,6 +72,7 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 		super.readFromNBT(compound);
 		this.speedUpgradeModifier = compound.getInteger("SpeedUpgradeModifier");
 		this.efficiencyUpgradeModifier = compound.getInteger("EfficiencyUpgradeModifier");
+		this.inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
 	}
 	
 	private void updateSpeedModifier(int slot) {
@@ -93,5 +100,17 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 			currentEfficiencyUpgrade = null;
 			efficiencyUpgradeModifier = 0;
 		}
+	}
+	
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return true;
+		return super.hasCapability(capability, facing);
+	}
+	
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return (T) this.inventory;
+		return super.getCapability(capability, facing);
 	}
 }

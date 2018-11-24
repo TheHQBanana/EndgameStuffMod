@@ -1,15 +1,38 @@
 package com.hqbanana.endgamestuffmod.tileentities.generators.magma;
 
+import com.hqbanana.endgamestuffmod.inventories.InventoryBase;
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityMagmaGeneratorAdvanced extends TileEntityMagmaGeneratorBase {
+	protected InventoryBase inventory = new InventoryBase(2) {
+		@Override
+		protected void onContentsChanged(int slot) {
+			super.onContentsChanged(slot);
+			switch(slot) {
+			case 0:
+				TileEntityMagmaGeneratorAdvanced.this.updateSpeedModifier(slot);
+				TileEntityMagmaGeneratorAdvanced.this.rfPerTick = (int)Math.max(rfPerTickBase, (rfPerTickBase * Math.pow(speedUpgradeModifier, 2)));
+				System.out.println("RF per tick: " + TileEntityMagmaGeneratorAdvanced.this.rfPerTick);
+				break;
+			case 1: 
+				TileEntityMagmaGeneratorAdvanced.this.updateEfficiencyModifier(slot);
+				break;
+			}
+			TileEntityMagmaGeneratorAdvanced.this.progressSpeed = (int)Math.max(1, (Math.pow(speedUpgradeModifier, 2) - Math.pow(efficiencyUpgradeModifier, 2)));
+			TileEntityMagmaGeneratorAdvanced.this.markDirty();
+		};
+	};
+	
 	public TileEntityMagmaGeneratorAdvanced() {
-		super("Advanced magma generator", 5000000, 0, 500000, 0);
+		super("Advanced magma generator", 5000000, 0, 100000, 0);
 		fluidTank = new FluidTank(8000) {
 			@Override
 			protected void onContentsChanged() {
@@ -18,24 +41,8 @@ public class TileEntityMagmaGeneratorAdvanced extends TileEntityMagmaGeneratorBa
 			};
 		};
 		
-		inventory = new ItemStackHandler(2) {
-			@Override
-			protected void onContentsChanged(int slot) {
-				super.onContentsChanged(slot);
-				switch(slot) {
-				case 0:
-					TileEntityMagmaGeneratorAdvanced.this.updateSpeedModifier(slot);
-					break;
-				case 1: 
-					TileEntityMagmaGeneratorAdvanced.this.updateEfficiencyModifier(slot);
-					break;
-				}
-				TileEntityMagmaGeneratorAdvanced.this.markDirty();
-			};
-		};
-		
 		fluidTank.setCanDrain(false);
-		rfPerTick = 80;
+		rfPerTickBase = 80;
 	}
 	
 	public int speedUpgradeModifier = 0, efficiencyUpgradeModifier = 0;
@@ -51,8 +58,8 @@ public class TileEntityMagmaGeneratorAdvanced extends TileEntityMagmaGeneratorBa
 					burnFuel();
 				}
 				if (currentBurnTime < totalBurnTime && this.getEnergyStored() < this.getMaxEnergyStored() && burnTime > 0) {
-					internalReceiveEnergy(Math.max(rfPerTick, (rfPerTick * (int)Math.pow(speedUpgradeModifier, 2))), false);
-					currentBurnTime += Math.max(1, (Math.pow(speedUpgradeModifier, 2) - Math.pow(efficiencyUpgradeModifier, 2)));
+					internalReceiveEnergy(rfPerTick, false);
+					currentBurnTime += progressSpeed;
 				} else if (currentBurnTime >= totalBurnTime && currentBurnTime != 0 && totalBurnTime != 0) {
 					currentBurnTime = 0;
 					totalBurnTime = 0;
@@ -69,6 +76,7 @@ public class TileEntityMagmaGeneratorAdvanced extends TileEntityMagmaGeneratorBa
 		compound = super.writeToNBT(compound);
 		compound.setInteger("SpeedUpgradeModifier", this.speedUpgradeModifier);
 		compound.setInteger("EfficiencyUpgradeModifier", this.efficiencyUpgradeModifier);
+		compound.setTag("Inventory", this.inventory.serializeNBT());
 		return compound;
 	}
 	
@@ -77,6 +85,7 @@ public class TileEntityMagmaGeneratorAdvanced extends TileEntityMagmaGeneratorBa
 		super.readFromNBT(compound);
 		this.speedUpgradeModifier = compound.getInteger("SpeedUpgradeModifier");
 		this.efficiencyUpgradeModifier = compound.getInteger("EfficiencyUpgradeModifier");
+		this.inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
 	}
 	
 	private void updateSpeedModifier(int slot) {
@@ -105,5 +114,19 @@ public class TileEntityMagmaGeneratorAdvanced extends TileEntityMagmaGeneratorBa
 			currentEfficiencyUpgrade = null;
 			efficiencyUpgradeModifier = 0;
 		}
+	}
+	
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return true;
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
+		return super.hasCapability(capability, facing);
+	}
+	
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return (T) this.inventory;
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return (T) this.fluidTank;
+		return super.getCapability(capability, facing);
 	}
 }

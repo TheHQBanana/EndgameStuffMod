@@ -1,8 +1,9 @@
 package com.hqbanana.endgamestuffmod.tileentities.machines;
 
+import com.hqbanana.endgamestuffmod.blocks.machines.BlockDragonBreathFactory;
 import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherStar;
 import com.hqbanana.endgamestuffmod.init.ModFluids;
-import com.hqbanana.endgamestuffmod.inventories.InventoryWitherFactory;
+import com.hqbanana.endgamestuffmod.inventories.InventoryDragonBreathFactory;
 import com.hqbanana.endgamestuffmod.power.EnergyStorageBase;
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
@@ -23,21 +24,21 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class TileEntityWitherFactory extends EnergyStorageBase implements ITickable {
-	protected InventoryWitherFactory inventory = new InventoryWitherFactory(12) {
+public class TileEntityDragonBreathFactory extends EnergyStorageBase implements ITickable {
+	protected InventoryDragonBreathFactory inventory = new InventoryDragonBreathFactory(5) {
 		@Override
 		protected void onContentsChanged(int slot) {
 			super.onContentsChanged(slot);
 			switch(slot) {
-			case 10:
-				TileEntityWitherFactory.this.updateSpeedModifier(slot);
+			case 3:
+				TileEntityDragonBreathFactory.this.updateSpeedModifier(slot);
 				break;
-			case 11: 
-				TileEntityWitherFactory.this.updateEfficiencyModifier(slot);
+			case 4: 
+				TileEntityDragonBreathFactory.this.updateEfficiencyModifier(slot);
 				break;
 			}
-			if (slot == 10 || slot == 11) TileEntityWitherFactory.this.rfPerTickUsage = (int)Math.max(TileEntityWitherFactory.this.rfPerTickBaseUsage, (TileEntityWitherFactory.this.rfPerTickBaseUsage * Math.max(1, (Math.pow(TileEntityWitherFactory.this.speedUpgradeModifier, 1.1f) - Math.pow(TileEntityWitherFactory.this.efficiencyUpgradeModifier, 0.9f)))));
-			TileEntityWitherFactory.this.markDirty();
+			if (slot == 3 || slot == 4) TileEntityDragonBreathFactory.this.rfPerTickUsage = (int)Math.max(TileEntityDragonBreathFactory.this.rfPerTickBaseUsage, (TileEntityDragonBreathFactory.this.rfPerTickBaseUsage * Math.max(1, (Math.pow(TileEntityDragonBreathFactory.this.speedUpgradeModifier, 1.1f) - Math.pow(TileEntityDragonBreathFactory.this.efficiencyUpgradeModifier, 0.9f)))));
+			TileEntityDragonBreathFactory.this.markDirty();
 		};
 	};
 	
@@ -45,7 +46,7 @@ public class TileEntityWitherFactory extends EnergyStorageBase implements ITicka
 		@Override
 		protected void onContentsChanged() {
 			super.onContentsChanged();
-			TileEntityWitherFactory.this.markDirty();
+			TileEntityDragonBreathFactory.this.markDirty();
 		};
 	};
 	
@@ -53,16 +54,20 @@ public class TileEntityWitherFactory extends EnergyStorageBase implements ITicka
 	private int speedUpgradeModifier = 0, efficiencyUpgradeModifier = 0;
 	private ItemStack currentSpeedUpgrade = null, currentEfficiencyUpgrade = null;
 	
-	public TileEntityWitherFactory() {
-		super("Wither factory", 20000000, 100000, 0);
+	public TileEntityDragonBreathFactory() {
+		super("Dragonbreath factory", 20000000, 100000, 0);
 	}
 
 	@Override
 	public void update() {
+		//if (totalProgressTime == 0 && getCanProgressWithTime() > 0 && outputItemsAndXP(true)) BlockDragonBreathFactory.setState(true, world, pos);
+		//if (currentProgressTime >= totalProgressTime && currentProgressTime != 0 && totalProgressTime != 0) BlockDragonBreathFactory.setState(false, world, pos);
+		
 		if (!this.world.isRemote) {
 			Block block = this.world.getBlockState(this.pos.down()).getBlock();
 			if (block instanceof BlockNetherStar) { //Change this to Netherest star block when that's created!
 				int progressTime = getCanProgressWithTime();
+				//System.out.println("Can progress: " + progressTime + "Output: " + outputItemsAndXP(true));
 				if (totalProgressTime == 0 && progressTime > 0 && outputItemsAndXP(true)) { //TEST OUPUTTING!
 					totalProgressTime = progressTime;
 					takeItems();
@@ -81,40 +86,28 @@ public class TileEntityWitherFactory extends EnergyStorageBase implements ITicka
 	}
 	
 	private void takeItems() {
-		for (int i = 0; i < 7; i++) {
-			this.inventory.getStackInSlot(i).shrink(1);
-		}
+		//Do not take out the item in slot 0, as this is the catalyst and thus will not be consumed!
+		this.inventory.getStackInSlot(1).shrink(1);
 	}
 	
 	private boolean outputItemsAndXP(boolean simulate) {
 		boolean success = false;
-		for (int i = 7; i < 10; i++) {
-			ItemStack itemStack = this.inventory.getStackInSlot(i);
-			if (itemStack.isEmpty()) {
-				if (!simulate) this.inventory.setStackInSlot(i, new ItemStack(Items.NETHER_STAR, 1));
-				success = true;
-			} else if (itemStack.getItem() == Items.NETHER_STAR && itemStack.getCount() < itemStack.getItem().getItemStackLimit()) {
-				if (!simulate) this.inventory.getStackInSlot(i).grow(1);
-				success = true;
-			}
+		ItemStack itemStack = this.inventory.getStackInSlot(2);
+		if (itemStack.isEmpty()) {
+			if (!simulate) this.inventory.setStackInSlot(2, new ItemStack(Items.DRAGON_BREATH, 1));
+			success = true;
+		} else if (itemStack.getItem() == Items.DRAGON_BREATH && itemStack.getCount() < itemStack.getItem().getItemStackLimit()) {
+			if (!simulate) this.inventory.getStackInSlot(2).grow(1);
+			success = true;
 		}
-		if (!simulate) this.fluidTank.fillInternal(new FluidStack(ModFluids.LIQUID_XP, 1000), true);
 		return success;
 	}
 	
 	private int getCanProgressWithTime() {
-		for (int i = 0; i < 7; i++ ) {
-			ItemStack itemStack = this.inventory.getStackInSlot(i);
-			if (itemStack.isEmpty()) return 0;
-			if (i >= 0 && i < 4) {
-				if (!(itemStack.getItem() instanceof ItemBlock)) return 0;
-				Block block = Block.getBlockFromItem(itemStack.getItem());
-				if (block != Blocks.SOUL_SAND) return 0;
-			} else {
-				if (itemStack.getItem() != Items.SKULL || itemStack.getItemDamage() != 1) return 0;
-			}
-		}
-		return 4000;
+		ItemStack itemStack = this.inventory.getStackInSlot(0);
+		if (itemStack.isEmpty() || itemStack.getItem() != Items.ENDER_PEARL) return 0;
+		if (this.inventory.getStackInSlot(1).isEmpty() || this.inventory.getStackInSlot(1).getItem() != Items.END_CRYSTAL) return 0;
+		return 40;
 	}
 	
 	public int getCurrentProgressTime() {

@@ -1,6 +1,5 @@
 package com.hqbanana.endgamestuffmod.containers.slots;
 
-import com.hqbanana.endgamestuffmod.items.generators.ItemGeneratorUpgradeBase;
 import com.hqbanana.endgamestuffmod.items.generators.ItemGeneratorUpgradeSpeed;
 
 import net.minecraft.item.ItemStack;

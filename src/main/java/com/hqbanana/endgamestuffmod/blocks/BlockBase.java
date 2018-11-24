@@ -6,8 +6,6 @@ import com.hqbanana.endgamestuffmod.init.ModItems;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
 public class BlockBase extends Block {

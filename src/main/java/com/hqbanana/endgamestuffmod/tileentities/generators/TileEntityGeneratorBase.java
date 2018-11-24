@@ -23,22 +23,26 @@ public class TileEntityGeneratorBase extends EnergyStorageBase implements ITicka
 	
 	protected PowerTransmitter transmitter;
 	
-	protected int rfPerTick = 20, totalBurnTime, currentBurnTime;
+	protected int rfPerTick = 20, rfPerTickBase = 20, totalBurnTime, currentBurnTime, progressSpeed = 1;
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.rfPerTick = compound.getInteger("RFPerTick");
+		this.rfPerTickBase = compound.getInteger("RFPerTickBase");
 		this.totalBurnTime = compound.getInteger("TotalBurnTime");
 		this.currentBurnTime = compound.getInteger("CurrentBurnTime");
+		this.progressSpeed = compound.getInteger("ProgressSpeed");
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound = super.writeToNBT(compound);
 		compound.setInteger("RFPerTick", this.rfPerTick);
+		compound.setInteger("RFPerTickBase", this.rfPerTickBase);
 		compound.setInteger("TotalBurnTime", this.totalBurnTime);
 		compound.setInteger("CurrentBurnTime", (short)this.currentBurnTime);
+		compound.setInteger("ProgressSpeed", (short)this.progressSpeed);
 		return compound;
 	}
 	

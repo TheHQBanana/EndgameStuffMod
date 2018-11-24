@@ -3,7 +3,9 @@ package com.hqbanana.endgamestuffmod.guis.machines;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hqbanana.endgamestuffmod.containers.machines.ContainerDragonBreathFactory;
 import com.hqbanana.endgamestuffmod.containers.machines.ContainerWitherFactory;
+import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityDragonBreathFactory;
 import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityWitherFactory;
 import com.hqbanana.endgamestuffmod.util.GuiHelper;
 import com.hqbanana.endgamestuffmod.util.Reference;
@@ -14,13 +16,13 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
-public class GuiWitherFactory extends GuiContainer {
-	protected ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/gui/machines/wither_factory.png");
+public class GuiDragonBreathFactory extends GuiContainer {
+	protected ResourceLocation TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/gui/machines/dragon_breath_factory.png");
 	protected final InventoryPlayer player;
-	protected final TileEntityWitherFactory te;
+	protected final TileEntityDragonBreathFactory te;
 	
-	public GuiWitherFactory(InventoryPlayer player, TileEntityWitherFactory te, ContainerWitherFactory cwf, String guiPath) {
-		super(cwf);
+	public GuiDragonBreathFactory(InventoryPlayer player, TileEntityDragonBreathFactory te, ContainerDragonBreathFactory cdbf, String guiPath) {
+		super(cdbf);
 		this.player = player;
 		this.te = te;
 		this.TEXTURES = new ResourceLocation(Reference.MOD_ID + ":textures/gui/machines/" + guiPath + ".png");
@@ -42,7 +44,7 @@ public class GuiWitherFactory extends GuiContainer {
 		drawLiquidHover(mouseX, mouseY);
 	}
 	
-	protected int getWitherProgressScaled(int pixels) {
+	protected int getBreathProgressScaled(int pixels) {
 		int i = this.te.getCurrentProgressTime();
 		int j = this.te.getTotalProgressTime();
 		return i != 0 && j != 0 ? i * pixels / j : 0;
@@ -61,8 +63,8 @@ public class GuiWitherFactory extends GuiContainer {
 	}
 	
 	protected void drawBars() {
-		int l = this.getWitherProgressScaled(24);
-		this.drawTexturedModalRect(this.guiLeft + 99, this.guiTop + 36, 196, 59, l + 1, 17);
+		int l = this.getBreathProgressScaled(24);
+		this.drawTexturedModalRect(this.guiLeft + 99, this.guiTop + 39, 196, 59, l + 1, 17);
 		
 		int k = this.getEnergyStoredScaled(59);
 		this.drawTexturedModalRect(this.guiLeft + 10, this.guiTop + 15 + 59 - k, 196, 59 - k, 16, k + 1);

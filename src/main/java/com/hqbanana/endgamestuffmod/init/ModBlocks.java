@@ -2,6 +2,8 @@ package com.hqbanana.endgamestuffmod.init;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.hqbanana.endgamestuffmod.blocks.BlockFluid;
 import com.hqbanana.endgamestuffmod.blocks.BlockRuby;
 import com.hqbanana.endgamestuffmod.blocks.BlockRubyFurnace;
 import com.hqbanana.endgamestuffmod.blocks.BlockRubyFurnaceElectric;
@@ -10,6 +12,7 @@ import com.hqbanana.endgamestuffmod.blocks.generators.coal.BlockCoalGeneratorAdv
 import com.hqbanana.endgamestuffmod.blocks.generators.coal.BlockCoalGeneratorSimple;
 import com.hqbanana.endgamestuffmod.blocks.generators.magma.BlockMagmaGeneratorAdvanced;
 import com.hqbanana.endgamestuffmod.blocks.generators.magma.BlockMagmaGeneratorSimple;
+import com.hqbanana.endgamestuffmod.blocks.machines.BlockDragonBreathFactory;
 import com.hqbanana.endgamestuffmod.blocks.machines.BlockWitherFactory;
 import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherStar;
 
@@ -38,4 +41,8 @@ public class ModBlocks {
 	
 	//Machines
 	public static final Block WITHER_FACTORY = new BlockWitherFactory("wither_factory", Material.IRON);
-	}
+	public static final Block DRAGON_BREATH_FACTORY = new BlockDragonBreathFactory("dragon_breath_factory", Material.IRON);
+	
+	//Liquids
+	public static final Block LIQUID_XP_BLOCK = new BlockFluid("liquid_xp", ModFluids.LIQUID_XP, Material.LAVA);
+}
