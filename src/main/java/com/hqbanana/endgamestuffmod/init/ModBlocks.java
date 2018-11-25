@@ -15,6 +15,8 @@ import com.hqbanana.endgamestuffmod.blocks.generators.magma.BlockMagmaGeneratorS
 import com.hqbanana.endgamestuffmod.blocks.machines.BlockDragonBreathFactory;
 import com.hqbanana.endgamestuffmod.blocks.machines.BlockWitherFactory;
 import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherStar;
+import com.hqbanana.endgamestuffmod.blocks.materials.BlockNethererStar;
+import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherestStar;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -38,6 +40,8 @@ public class ModBlocks {
 	
 	//Materials
 	public static final Block NETHER_STAR_BLOCK = new BlockNetherStar("nether_star_block", Material.ROCK);
+	public static final Block NETHERER_STAR_BLOCK = new BlockNethererStar("netherer_star_block", Material.ROCK);
+	public static final Block NETHEREST_STAR_BLOCK = new BlockNetherestStar("netherest_star_block", Material.ROCK);
 	
 	//Machines
 	public static final Block WITHER_FACTORY = new BlockWitherFactory("wither_factory", Material.IRON);

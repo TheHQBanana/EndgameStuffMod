@@ -1,6 +1,6 @@
 package com.hqbanana.endgamestuffmod.tileentities.machines;
 
-import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherStar;
+import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherestStar;
 import com.hqbanana.endgamestuffmod.init.ModFluids;
 import com.hqbanana.endgamestuffmod.inventories.InventoryWitherFactory;
 import com.hqbanana.endgamestuffmod.power.EnergyStorageBase;
@@ -61,7 +61,7 @@ public class TileEntityWitherFactory extends EnergyStorageBase implements ITicka
 	public void update() {
 		if (!this.world.isRemote) {
 			Block block = this.world.getBlockState(this.pos.down()).getBlock();
-			if (block instanceof BlockNetherStar) { //Change this to Netherest star block when that's created!
+			if (block instanceof BlockNetherestStar) { //Change this to Netherest star block when that's created!
 				int progressTime = getCanProgressWithTime();
 				if (totalProgressTime == 0 && progressTime > 0 && outputItemsAndXP(true)) { //TEST OUPUTTING!
 					totalProgressTime = progressTime;
@@ -99,6 +99,7 @@ public class TileEntityWitherFactory extends EnergyStorageBase implements ITicka
 			}
 		}
 		if (!simulate) this.fluidTank.fillInternal(new FluidStack(ModFluids.LIQUID_XP, 1000), true);
+		success = this.fluidTank.getFluidAmount() + 1000 < this.fluidTank.getCapacity();
 		return success;
 	}
 	

@@ -1,7 +1,6 @@
 package com.hqbanana.endgamestuffmod.tileentities.machines;
 
-import com.hqbanana.endgamestuffmod.blocks.machines.BlockDragonBreathFactory;
-import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherStar;
+import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherestStar;
 import com.hqbanana.endgamestuffmod.init.ModFluids;
 import com.hqbanana.endgamestuffmod.inventories.InventoryDragonBreathFactory;
 import com.hqbanana.endgamestuffmod.power.EnergyStorageBase;
@@ -11,7 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -65,7 +64,7 @@ public class TileEntityDragonBreathFactory extends EnergyStorageBase implements 
 		
 		if (!this.world.isRemote) {
 			Block block = this.world.getBlockState(this.pos.down()).getBlock();
-			if (block instanceof BlockNetherStar) { //Change this to Netherest star block when that's created!
+			if (block instanceof BlockNetherestStar) { //Change this to Netherest star block when that's created!
 				int progressTime = getCanProgressWithTime();
 				//System.out.println("Can progress: " + progressTime + "Output: " + outputItemsAndXP(true));
 				if (totalProgressTime == 0 && progressTime > 0 && outputItemsAndXP(true)) { //TEST OUPUTTING!
@@ -92,6 +91,7 @@ public class TileEntityDragonBreathFactory extends EnergyStorageBase implements 
 	
 	private boolean outputItemsAndXP(boolean simulate) {
 		boolean success = false;
+		
 		ItemStack itemStack = this.inventory.getStackInSlot(2);
 		if (itemStack.isEmpty()) {
 			if (!simulate) this.inventory.setStackInSlot(2, new ItemStack(Items.DRAGON_BREATH, 1));
@@ -100,12 +100,14 @@ public class TileEntityDragonBreathFactory extends EnergyStorageBase implements 
 			if (!simulate) this.inventory.getStackInSlot(2).grow(1);
 			success = true;
 		}
+		if (!simulate) this.fluidTank.fillInternal(new FluidStack(ModFluids.LIQUID_XP, 4000), true);
+		success = this.fluidTank.getFluidAmount() + 1000 < this.fluidTank.getCapacity();
 		return success;
 	}
 	
 	private int getCanProgressWithTime() {
 		ItemStack itemStack = this.inventory.getStackInSlot(0);
-		if (itemStack.isEmpty() || itemStack.getItem() != Items.ENDER_PEARL) return 0;
+		if (itemStack.isEmpty() || itemStack.getItem() != Item.getItemFromBlock(Blocks.DRAGON_EGG)) return 0;
 		if (this.inventory.getStackInSlot(1).isEmpty() || this.inventory.getStackInSlot(1).getItem() != Items.END_CRYSTAL) return 0;
 		return 40;
 	}

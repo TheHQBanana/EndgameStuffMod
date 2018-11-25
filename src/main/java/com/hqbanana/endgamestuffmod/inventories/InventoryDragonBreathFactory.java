@@ -2,7 +2,9 @@ package com.hqbanana.endgamestuffmod.inventories;
 
 import com.hqbanana.endgamestuffmod.init.ModItems;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class InventoryDragonBreathFactory extends InventoryBase {
@@ -21,7 +23,7 @@ public class InventoryDragonBreathFactory extends InventoryBase {
 	@Override
 	public boolean isItemValid(int slot, ItemStack stack) {
 		if (slot == 0) {
-			return stack.getItem() == Items.ENDER_PEARL;
+			return stack.getItem() == Item.getItemFromBlock(Blocks.DRAGON_EGG);
 		} else if (slot == 1) {
 			return stack.getItem() == Items.END_CRYSTAL;
 		} else if (slot == 2) {
