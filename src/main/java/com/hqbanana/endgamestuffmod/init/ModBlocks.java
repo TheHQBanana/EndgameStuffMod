@@ -13,6 +13,7 @@ import com.hqbanana.endgamestuffmod.blocks.generators.coal.BlockCoalGeneratorSim
 import com.hqbanana.endgamestuffmod.blocks.generators.magma.BlockMagmaGeneratorAdvanced;
 import com.hqbanana.endgamestuffmod.blocks.generators.magma.BlockMagmaGeneratorSimple;
 import com.hqbanana.endgamestuffmod.blocks.machines.BlockDragonBreathFactory;
+import com.hqbanana.endgamestuffmod.blocks.machines.BlockLiquidXPConverter;
 import com.hqbanana.endgamestuffmod.blocks.machines.BlockWitherFactory;
 import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherStar;
 import com.hqbanana.endgamestuffmod.blocks.materials.BlockNethererStar;
@@ -46,6 +47,7 @@ public class ModBlocks {
 	//Machines
 	public static final Block WITHER_FACTORY = new BlockWitherFactory("wither_factory", Material.IRON);
 	public static final Block DRAGON_BREATH_FACTORY = new BlockDragonBreathFactory("dragon_breath_factory", Material.IRON);
+	public static final Block LIQUID_XP_CONVERTER = new BlockLiquidXPConverter("liquid_xp_converter", Material.IRON);
 	
 	//Liquids
 	public static final Block LIQUID_XP_BLOCK = new BlockFluid("liquid_xp", ModFluids.LIQUID_XP, Material.LAVA);

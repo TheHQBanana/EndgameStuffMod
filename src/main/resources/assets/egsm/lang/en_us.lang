@@ -23,8 +23,9 @@ tile.magma_generator_simple.name=Simple magma generator
 tile.magma_generator_advanced.name=Advanced magma generator
 tile.wither_factory.name=Wither factory
 tile.dragon_breath_factory.name=Dragonbreath factory
-tile.netherer_star_block.name = Netherer star block
-tile.netherest_star_block.name = Netherest star block
+tile.netherer_star_block.name=Netherer star block
+tile.netherest_star_block.name=Netherest star block
+tile.liquid_xp_converter.name=Liquid XP converter
 
 //Tabs
 itemGroup.endgamestufftab=Endgame stuff

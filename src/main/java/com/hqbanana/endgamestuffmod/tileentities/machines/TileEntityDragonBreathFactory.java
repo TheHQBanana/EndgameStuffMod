@@ -23,7 +23,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class TileEntityDragonBreathFactory extends EnergyStorageBase implements ITickable {
+public class TileEntityDragonBreathFactory extends TileEntityMachineBase implements ITickable {
 	protected InventoryDragonBreathFactory inventory = new InventoryDragonBreathFactory(5) {
 		@Override
 		protected void onContentsChanged(int slot) {
@@ -49,12 +49,10 @@ public class TileEntityDragonBreathFactory extends EnergyStorageBase implements 
 		};
 	};
 	
-	private int currentProgressTime, totalProgressTime, rfPerTickBaseUsage = 2500, rfPerTickUsage = 2500, progressSpeed = 1;
-	private int speedUpgradeModifier = 0, efficiencyUpgradeModifier = 0;
-	private ItemStack currentSpeedUpgrade = null, currentEfficiencyUpgrade = null;
-	
 	public TileEntityDragonBreathFactory() {
 		super("Dragonbreath factory", 20000000, 100000, 0);
+		rfPerTickBaseUsage = 2500;
+		rfPerTickUsage = 2500;
 	}
 
 	@Override

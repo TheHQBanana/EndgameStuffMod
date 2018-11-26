@@ -7,6 +7,7 @@ import com.hqbanana.endgamestuffmod.containers.generators.coal.ContainerCoalGene
 import com.hqbanana.endgamestuffmod.containers.generators.magma.ContainerMagmaGeneratorAdvanced;
 import com.hqbanana.endgamestuffmod.containers.generators.magma.ContainerMagmaGeneratorSimple;
 import com.hqbanana.endgamestuffmod.containers.machines.ContainerDragonBreathFactory;
+import com.hqbanana.endgamestuffmod.containers.machines.ContainerLiquidXPConverter;
 import com.hqbanana.endgamestuffmod.containers.machines.ContainerWitherFactory;
 import com.hqbanana.endgamestuffmod.guis.GuiRubyFurnace;
 import com.hqbanana.endgamestuffmod.guis.GuiRubyFurnaceElectric;
@@ -15,6 +16,7 @@ import com.hqbanana.endgamestuffmod.guis.generators.coal.GuiCoalGeneratorSimple;
 import com.hqbanana.endgamestuffmod.guis.generators.magma.GuiMagmaGeneratorAdvanced;
 import com.hqbanana.endgamestuffmod.guis.generators.magma.GuiMagmaGeneratorSimple;
 import com.hqbanana.endgamestuffmod.guis.machines.GuiDragonBreathFactory;
+import com.hqbanana.endgamestuffmod.guis.machines.GuiLiquidXPConverter;
 import com.hqbanana.endgamestuffmod.guis.machines.GuiWitherFactory;
 import com.hqbanana.endgamestuffmod.tileentities.TileEntityRubyFurnace;
 import com.hqbanana.endgamestuffmod.tileentities.TileEntityRubyFurnaceElectric;
@@ -23,6 +25,7 @@ import com.hqbanana.endgamestuffmod.tileentities.generators.coal.TileEntityCoalG
 import com.hqbanana.endgamestuffmod.tileentities.generators.magma.TileEntityMagmaGeneratorAdvanced;
 import com.hqbanana.endgamestuffmod.tileentities.generators.magma.TileEntityMagmaGeneratorSimple;
 import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityDragonBreathFactory;
+import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityLiquidXPConverter;
 import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityWitherFactory;
 import com.hqbanana.endgamestuffmod.util.Reference;
 
@@ -47,7 +50,8 @@ public class GuiHandler implements IGuiHandler {
 		//---------------Machines---------------//
 		if (ID == Reference.GUI_WITHER_FACTORY) return new ContainerWitherFactory(player.inventory, (TileEntityWitherFactory)world.getTileEntity(new BlockPos(x, y, z)));
 		if (ID == Reference.GUI_DRAGON_BREATH_FACTORY) return new ContainerDragonBreathFactory(player.inventory, (TileEntityDragonBreathFactory)world.getTileEntity(new BlockPos(x, y, z)));
-		//---------------Machines---------------//
+		if (ID == Reference.GUI_LIQUID_XP_CONVERTER) return new ContainerLiquidXPConverter(player.inventory, (TileEntityLiquidXPConverter)world.getTileEntity(new BlockPos(x, y, z)));
+//---------------Machines---------------//
 		return null;
 	}
 
@@ -66,7 +70,8 @@ public class GuiHandler implements IGuiHandler {
 		//---------------Machines---------------//
 		if (ID == Reference.GUI_WITHER_FACTORY) return new GuiWitherFactory(player.inventory, (TileEntityWitherFactory)world.getTileEntity(new BlockPos(x, y, z)), new ContainerWitherFactory(player.inventory, (TileEntityWitherFactory)world.getTileEntity(new BlockPos(x, y, z))), "wither_factory");
 		if (ID == Reference.GUI_DRAGON_BREATH_FACTORY) return new GuiDragonBreathFactory(player.inventory, (TileEntityDragonBreathFactory)world.getTileEntity(new BlockPos(x, y, z)), new ContainerDragonBreathFactory(player.inventory, (TileEntityDragonBreathFactory)world.getTileEntity(new BlockPos(x, y, z))), "dragon_breath_factory");
-		//---------------Machines---------------//
+		if (ID == Reference.GUI_LIQUID_XP_CONVERTER) return new GuiLiquidXPConverter(player.inventory, (TileEntityLiquidXPConverter)world.getTileEntity(new BlockPos(x, y, z)), new ContainerLiquidXPConverter(player.inventory, (TileEntityLiquidXPConverter)world.getTileEntity(new BlockPos(x, y, z))), "dragon_breath_factory");
+//---------------Machines---------------//
 		return null;
 	}
 	

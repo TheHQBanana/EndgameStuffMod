@@ -9,6 +9,7 @@ import com.hqbanana.endgamestuffmod.world.ModWorldGen;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -32,14 +33,20 @@ public class RegistryHandler {
 		ModFluids.registerFluids();
 		GameRegistry.registerWorldGenerator(new ModWorldGen(), 3);
 		RenderHandler.registerCustomMeshesAndStates();
+		registerEventHandlers();
 	}
 	
 	public static void initRegistries() {
 		ModRecipes.init();
 		NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new GuiHandler());
+		Main.proxy.registerKeyBindings();
 	}
 	
 	public static void postInitRegistries() {
 		
+	}
+	
+	public static void registerEventHandlers() {
+		MinecraftForge.EVENT_BUS.register(new FMLEventHandler());
 	}
 }

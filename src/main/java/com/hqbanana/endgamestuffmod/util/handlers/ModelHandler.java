@@ -71,12 +71,16 @@ public class ModelHandler {
                 new ModelResourceLocation(ModItems.NETHERER_STAR.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(ModItems.NETHEREST_STAR, 0,
                 new ModelResourceLocation(ModItems.NETHEREST_STAR.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(ModItems.XP_CHUNK, 0,
+                new ModelResourceLocation(ModItems.XP_CHUNK.getRegistryName(), "inventory"));
         //----------------Materials----------------//
         //----------------Machines----------------//
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.WITHER_FACTORY), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.WITHER_FACTORY).getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.DRAGON_BREATH_FACTORY), 0,
                 new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.DRAGON_BREATH_FACTORY).getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.LIQUID_XP_CONVERTER), 0,
+                new ModelResourceLocation(Item.getItemFromBlock(ModBlocks.LIQUID_XP_CONVERTER).getRegistryName(), "inventory"));
         //----------------Machines----------------//
         //----------------Fluid----------------//
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.LIQUID_XP_BLOCK), 0,

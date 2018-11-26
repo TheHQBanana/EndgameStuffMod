@@ -7,6 +7,7 @@ import com.hqbanana.endgamestuffmod.tileentities.generators.coal.TileEntityCoalG
 import com.hqbanana.endgamestuffmod.tileentities.generators.magma.TileEntityMagmaGeneratorAdvanced;
 import com.hqbanana.endgamestuffmod.tileentities.generators.magma.TileEntityMagmaGeneratorSimple;
 import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityDragonBreathFactory;
+import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityLiquidXPConverter;
 import com.hqbanana.endgamestuffmod.tileentities.machines.TileEntityWitherFactory;
 
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -26,6 +27,8 @@ public class TileEntityHandler {
 		//----------------Machines----------------//
 		GameRegistry.registerTileEntity(TileEntityWitherFactory.class, "wither_factory");
 		GameRegistry.registerTileEntity(TileEntityDragonBreathFactory.class, "dragon_breath_factory");
+		GameRegistry.registerTileEntity(TileEntityLiquidXPConverter.class, "liquid_xp_converter");
+
 		//----------------Machines----------------//
 	}
 }

@@ -1,0 +1,13 @@
+{
+    "variants":
+    {
+        "active=false,facing=north": { "model": "egsm:liquid_xp_converter" },
+        "active=false,facing=east": { "model": "egsm:liquid_xp_converter", "y": 90 },
+        "active=false,facing=south": { "model": "egsm:liquid_xp_converter", "y": 180 },
+        "active=false,facing=west": { "model": "egsm:liquid_xp_converter", "y": 270 },
+        "active=true,facing=north": { "model": "egsm:active_liquid_xp_converter" },
+        "active=true,facing=east": { "model": "egsm:active_liquid_xp_converter", "y": 90 },
+        "active=true,facing=south": { "model": "egsm:active_liquid_xp_converter", "y": 180 },
+        "active=true,facing=west": { "model": "egsm:active_liquid_xp_converter", "y": 270 }
+    }
+}
