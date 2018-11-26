@@ -33,7 +33,7 @@ public class RegistryHandler {
 		ModFluids.registerFluids();
 		GameRegistry.registerWorldGenerator(new ModWorldGen(), 3);
 		RenderHandler.registerCustomMeshesAndStates();
-		registerEventHandlers();
+		//registerEventHandlers();
 	}
 	
 	public static void initRegistries() {

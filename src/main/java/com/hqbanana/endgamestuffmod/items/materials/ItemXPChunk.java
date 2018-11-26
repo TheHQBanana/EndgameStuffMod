@@ -1,10 +1,7 @@
 package com.hqbanana.endgamestuffmod.items.materials;
 
-import java.util.Set;
-
 import com.hqbanana.endgamestuffmod.items.ItemBase;
 
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -13,12 +10,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ItemXPChunk extends ItemBase {
-	private Set<String> keybinds;
+	private int xpPerChunk = 5;
 	
 	public ItemXPChunk(String name) {
 		super(name);
@@ -26,9 +20,11 @@ public class ItemXPChunk extends ItemBase {
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		//if ()
-		playerIn.addExperience(5);
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+		if (!worldIn.isRemote) {
+			playerIn.addExperience(playerIn.isSneaking() ? xpPerChunk * playerIn.getHeldItem(handIn).getCount() : xpPerChunk);
+			playerIn.getHeldItem(handIn).shrink(playerIn.isSneaking() ? playerIn.getHeldItem(handIn).getCount() : 1);
+		}
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 	}
 	
 	@Override

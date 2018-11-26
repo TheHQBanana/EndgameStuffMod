@@ -2,7 +2,6 @@ package com.hqbanana.endgamestuffmod.tileentities.machines;
 
 import com.hqbanana.endgamestuffmod.init.ModFluids;
 import com.hqbanana.endgamestuffmod.inventories.InventoryDragonBreathFactory;
-import com.hqbanana.endgamestuffmod.power.EnergyStorageBase;
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
 import net.minecraft.item.ItemStack;
@@ -28,7 +27,7 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 				TileEntityLiquidXPConverter.this.updateEfficiencyModifier(slot);
 				break;
 			}
-			if (slot == 3 || slot == 4) TileEntityLiquidXPConverter.this.rfPerTickUsage = (int)Math.max(TileEntityLiquidXPConverter.this.rfPerTickBaseUsage, (TileEntityLiquidXPConverter.this.rfPerTickBaseUsage * Math.max(1, (Math.pow(TileEntityLiquidXPConverter.this.speedUpgradeModifier, 1.1f) - Math.pow(TileEntityLiquidXPConverter.this.efficiencyUpgradeModifier, 0.9f)))));
+			if (slot == 1 || slot == 2) TileEntityLiquidXPConverter.this.rfPerTickUsage = (int)Math.max(TileEntityLiquidXPConverter.this.rfPerTickBaseUsage, (TileEntityLiquidXPConverter.this.rfPerTickBaseUsage * Math.max(1, (Math.pow(TileEntityLiquidXPConverter.this.speedUpgradeModifier, 1.1f) - Math.pow(TileEntityLiquidXPConverter.this.efficiencyUpgradeModifier, 0.9f)))));
 			TileEntityLiquidXPConverter.this.markDirty();
 		};
 	};
@@ -55,6 +54,7 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound = super.writeToNBT(compound);
+		compound.setTag("Inventory", this.inventory.serializeNBT());
 		compound.setTag("FluidTank", this.fluidTank.writeToNBT(new NBTTagCompound()));
 		return compound;
 	}

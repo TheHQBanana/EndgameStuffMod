@@ -70,7 +70,7 @@ public class GuiHandler implements IGuiHandler {
 		//---------------Machines---------------//
 		if (ID == Reference.GUI_WITHER_FACTORY) return new GuiWitherFactory(player.inventory, (TileEntityWitherFactory)world.getTileEntity(new BlockPos(x, y, z)), new ContainerWitherFactory(player.inventory, (TileEntityWitherFactory)world.getTileEntity(new BlockPos(x, y, z))), "wither_factory");
 		if (ID == Reference.GUI_DRAGON_BREATH_FACTORY) return new GuiDragonBreathFactory(player.inventory, (TileEntityDragonBreathFactory)world.getTileEntity(new BlockPos(x, y, z)), new ContainerDragonBreathFactory(player.inventory, (TileEntityDragonBreathFactory)world.getTileEntity(new BlockPos(x, y, z))), "dragon_breath_factory");
-		if (ID == Reference.GUI_LIQUID_XP_CONVERTER) return new GuiLiquidXPConverter(player.inventory, (TileEntityLiquidXPConverter)world.getTileEntity(new BlockPos(x, y, z)), new ContainerLiquidXPConverter(player.inventory, (TileEntityLiquidXPConverter)world.getTileEntity(new BlockPos(x, y, z))), "dragon_breath_factory");
+		if (ID == Reference.GUI_LIQUID_XP_CONVERTER) return new GuiLiquidXPConverter(player.inventory, (TileEntityLiquidXPConverter)world.getTileEntity(new BlockPos(x, y, z)), new ContainerLiquidXPConverter(player.inventory, (TileEntityLiquidXPConverter)world.getTileEntity(new BlockPos(x, y, z))), "liquid_xp_converter");
 //---------------Machines---------------//
 		return null;
 	}
