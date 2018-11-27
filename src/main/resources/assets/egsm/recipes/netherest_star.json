@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+   
+    "pattern":
+    [
+        " N ",
+        "NBN",
+        " N "
+    ],
+   
+    "key":
+    {
+        "N":
+        {
+            "item": "egsm:netherer_star"
+        },
+        "B":
+        {
+        	"item": "egsm:netherer_star_block"
+        }
+    },
+   
+    "result":
+    {
+        "item": "egsm:netherest_star",
+        "count": 1
+    }
+}

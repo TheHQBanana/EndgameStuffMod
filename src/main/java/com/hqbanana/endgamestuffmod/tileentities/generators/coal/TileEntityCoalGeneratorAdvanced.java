@@ -5,9 +5,12 @@ import com.hqbanana.endgamestuffmod.blocks.generators.coal.BlockCoalGeneratorSim
 import com.hqbanana.endgamestuffmod.inventories.InventoryCoalGenerator;
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -119,5 +122,11 @@ public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return (T) this.inventory;
 		return super.getCapability(capability, facing);
+	}
+	
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return oldState.getBlock() != newSate.getBlock();
+		//return super.shouldRefresh(world, pos, oldState, newSate);
 	}
 }

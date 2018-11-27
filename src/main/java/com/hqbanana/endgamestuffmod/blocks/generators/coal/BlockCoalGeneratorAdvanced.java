@@ -35,13 +35,7 @@ public class BlockCoalGeneratorAdvanced extends BlockCoalGeneratorBase {
 	
 	public static void setState(boolean active, World worldIn, BlockPos pos) {
 		IBlockState state = worldIn.getBlockState(pos);
-		TileEntity te = worldIn.getTileEntity(pos);
 		worldIn.setBlockState(pos,  ModBlocks.COAL_GENERATOR_ADVANCED.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(BURNING, active), 3);
-		
-		if(te != null) {
-			te.validate();
-			worldIn.setTileEntity(pos, te);
-		}
 	}
 	
 	@Override
