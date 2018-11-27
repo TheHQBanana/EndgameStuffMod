@@ -1,9 +1,15 @@
 package com.hqbanana.endgamestuffmod.tileentities.machines;
 
+import com.hqbanana.endgamestuffmod.blocks.materials.BlockNetherestStar;
 import com.hqbanana.endgamestuffmod.init.ModFluids;
+import com.hqbanana.endgamestuffmod.init.ModItems;
 import com.hqbanana.endgamestuffmod.inventories.InventoryDragonBreathFactory;
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -40,6 +46,8 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 		};
 	};
 	
+	private int mbPerXPChunk = 100;
+	
 	public TileEntityLiquidXPConverter() {
 		super("Liquid XP converter", 5000000, 2048, 0);
 		rfPerTickBaseUsage = 100;
@@ -48,7 +56,50 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 
 	@Override
 	public void update() {
+		if (!this.world.isRemote) {
+			if (this.fluidTank.getFluidAmount() > mbPerXPChunk) {
+				int progressTime = getCanProgressWithTime();
+				if (totalProgressTime == 0 && progressTime > 0 && outputItems(true)) { //TEST OUPUTTING!
+					totalProgressTime = progressTime;
+					takeFluids();
+				}
+				if (this.getEnergyStored() >= rfPerTickUsage && currentProgressTime < totalProgressTime) {
+					this.internalExtractEnergy(rfPerTickUsage, false);
+					currentProgressTime += progressSpeed;
+				} else if (currentProgressTime >= totalProgressTime && currentProgressTime != 0 && totalProgressTime != 0) {
+					currentProgressTime = 0;
+					totalProgressTime = 0;
+					outputItems(false);
+				}
+				this.markDirty();
+			}
+		}
+	}
+	
+	private void takeFluids() {
+		//Do not take out the item in slot 0, as this is the catalyst and thus will not be consumed!
+		this.fluidTank.drainInternal(mbPerXPChunk, true);
+	}
+	
+	private boolean outputItems(boolean simulate) {
+		boolean success = false;
 		
+		ItemStack itemStack = this.inventory.getStackInSlot(0);
+		if (itemStack.isEmpty()) {
+			if (!simulate) this.inventory.setStackInSlot(0, new ItemStack(Items.DRAGON_BREATH, 1));
+			success = true;
+		} else if (itemStack.getItem() == ModItems.XP_CHUNK && itemStack.getCount() < itemStack.getItem().getItemStackLimit()) {
+			if (!simulate) this.inventory.getStackInSlot(0).grow(1);
+			success = true;
+		}
+		return success;
+	}
+	
+	private int getCanProgressWithTime() {
+		FluidStack fluidStack = this.fluidTank.getFluid();
+		System.out.println("FLUID: " + this.fluidTank.getFluid());
+		if (fluidStack != null || this.fluidTank.getFluidAmount() < mbPerXPChunk || fluidStack.getFluid() != ModFluids.LIQUID_XP) return 0;
+		return 20;
 	}
 	
 	@Override

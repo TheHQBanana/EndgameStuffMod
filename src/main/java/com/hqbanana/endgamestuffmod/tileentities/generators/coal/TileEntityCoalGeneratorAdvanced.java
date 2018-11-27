@@ -1,17 +1,16 @@
 package com.hqbanana.endgamestuffmod.tileentities.generators.coal;
 
-import com.hqbanana.endgamestuffmod.inventories.InventoryBase;
+import com.hqbanana.endgamestuffmod.inventories.InventoryCoalGenerator;
 import com.hqbanana.endgamestuffmod.util.EnumUpgrade;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityCoalGeneratorAdvanced extends TileEntityCoalGeneratorBase {
-	protected InventoryBase inventory = new InventoryBase(3) {
+	protected InventoryCoalGenerator inventory = new InventoryCoalGenerator(3) {
 		@Override
 		protected void onContentsChanged(int slot) {
 			super.onContentsChanged(slot);
