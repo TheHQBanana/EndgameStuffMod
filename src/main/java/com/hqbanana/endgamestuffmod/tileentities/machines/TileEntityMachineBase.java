@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 public class TileEntityMachineBase extends EnergyStorageBase implements ITickable {
-	protected int currentProgressTime, totalProgressTime, rfPerTickBaseUsage = 100, rfPerTickUsage = 100, progressSpeed = 1;
+	protected int currentProgressTime, totalProgressTime, rfPerTickBaseUsage = 100, rfPerTickUsage = 100, progressSpeed = 1, baseProcessTime = 20;
 	protected int speedUpgradeModifier = 0, efficiencyUpgradeModifier = 0;
 	protected ItemStack currentSpeedUpgrade = null, currentEfficiencyUpgrade = null;
 	
@@ -25,6 +25,7 @@ public class TileEntityMachineBase extends EnergyStorageBase implements ITickabl
 		compound.setInteger("RFPerTickBaseUsage", this.rfPerTickBaseUsage);
 		compound.setInteger("RFPerTickUsage", this.rfPerTickUsage);
 		compound.setInteger("ProgressSpeed", this.progressSpeed);
+		compound.setInteger("BaseProcessTime", this.baseProcessTime);
 		return compound;
 	}
 	
@@ -38,10 +39,11 @@ public class TileEntityMachineBase extends EnergyStorageBase implements ITickabl
 		this.rfPerTickUsage = compound.getInteger("RFPerTickUsage");
 		this.progressSpeed = compound.getInteger("ProgressSpeed");
 		this.rfPerTickBaseUsage = compound.getInteger("RFPerTickBaseUsage");
+		this.baseProcessTime = compound.getInteger("BaseProcessTime");
 	}
 	
 	public int getCurrentProgressTime() {
-		return this.currentProgressTime;
+		return this.currentProgressTime % this.baseProcessTime;
 	}
 	
 	public int getTotalProgressTime() {

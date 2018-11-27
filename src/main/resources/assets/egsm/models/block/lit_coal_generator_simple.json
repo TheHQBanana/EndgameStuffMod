@@ -2,12 +2,12 @@
     "parent": "block/orientable",
     "textures":
     {
-        "particle": "egsm:blocks/ruby_furnace_front_off",
-        "up": "egsm:blocks/ruby_furnace_top",
-        "down": "egsm:blocks/ruby_furnace_top",
-        "north": "egsm:blocks/ruby_furnace_front_on",
-        "east": "egsm:blocks/ruby_furnace_side",
-        "south": "egsm:blocks/ruby_furnace_side",
-        "west": "egsm:blocks/ruby_furnace_side"
+        "particle": "egsm:blocks/coal_generator_front_off",
+        "up": "egsm:blocks/coal_generator_top",
+        "down": "egsm:blocks/coal_generator_top",
+        "north": "egsm:blocks/coal_generator_front_on",
+        "east": "egsm:blocks/coal_generator_side",
+        "south": "egsm:blocks/coal_generator_side",
+        "west": "egsm:blocks/coal_generator_side"
     }
 }

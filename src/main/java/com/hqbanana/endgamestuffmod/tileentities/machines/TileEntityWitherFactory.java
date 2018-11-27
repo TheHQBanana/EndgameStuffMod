@@ -53,6 +53,7 @@ public class TileEntityWitherFactory extends TileEntityMachineBase implements IT
 		super("Wither factory", 20000000, 100000, 0);
 		rfPerTickBaseUsage = 2500;
 		rfPerTickUsage = 2500;
+		baseProcessTime = 4000;
 	}
 
 	@Override
@@ -113,16 +114,16 @@ public class TileEntityWitherFactory extends TileEntityMachineBase implements IT
 				if (itemStack.getItem() != Items.SKULL || itemStack.getItemDamage() != 1) return 0;
 			}
 		}
-		return 4000;
+		return baseProcessTime;
 	}
 	
-	public int getCurrentProgressTime() {
-		return this.currentProgressTime;
-	}
+	//public int getCurrentProgressTime() {
+	//	return this.currentProgressTime;
+	//}
 	
-	public int getTotalProgressTime() {
-		return this.totalProgressTime;
-	}
+	//public int getTotalProgressTime() {
+	//	return this.totalProgressTime;
+	//}
 	
 	public static boolean isActive() {
 		return true;

@@ -3,6 +3,7 @@ package com.hqbanana.endgamestuffmod.items.materials;
 import com.hqbanana.endgamestuffmod.items.ItemBase;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;

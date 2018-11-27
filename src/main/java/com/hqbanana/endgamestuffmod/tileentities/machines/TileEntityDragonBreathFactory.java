@@ -53,6 +53,7 @@ public class TileEntityDragonBreathFactory extends TileEntityMachineBase impleme
 		super("Dragonbreath factory", 20000000, 100000, 0);
 		rfPerTickBaseUsage = 2500;
 		rfPerTickUsage = 2500;
+		baseProcessTime = 4000;
 	}
 
 	@Override
@@ -65,7 +66,7 @@ public class TileEntityDragonBreathFactory extends TileEntityMachineBase impleme
 			if (block instanceof BlockNetherestStar) { //Change this to Netherest star block when that's created!
 				int progressTime = getCanProgressWithTime();
 				//System.out.println("Can progress: " + progressTime + "Output: " + outputItemsAndXP(true));
-				if (totalProgressTime == 0 && progressTime > 0 && outputItemsAndXP(true)) { //TEST OUPUTTING!
+				if (totalProgressTime == 0 && progressTime > 0 && outputItemsAndXP(true)) {
 					totalProgressTime = progressTime;
 					takeItems();
 				}
@@ -107,16 +108,16 @@ public class TileEntityDragonBreathFactory extends TileEntityMachineBase impleme
 		ItemStack itemStack = this.inventory.getStackInSlot(0);
 		if (itemStack.isEmpty() || itemStack.getItem() != Item.getItemFromBlock(Blocks.DRAGON_EGG)) return 0;
 		if (this.inventory.getStackInSlot(1).isEmpty() || this.inventory.getStackInSlot(1).getItem() != Items.END_CRYSTAL) return 0;
-		return 40;
+		return baseProcessTime;
 	}
 	
-	public int getCurrentProgressTime() {
-		return this.currentProgressTime;
-	}
+	//public int getCurrentProgressTime() {
+	//	return this.currentProgressTime;
+	//}
 	
-	public int getTotalProgressTime() {
-		return this.totalProgressTime;
-	}
+	//public int getTotalProgressTime() {
+	//	return this.totalProgressTime;
+	//}
 	
 	public static boolean isActive() {
 		return true;

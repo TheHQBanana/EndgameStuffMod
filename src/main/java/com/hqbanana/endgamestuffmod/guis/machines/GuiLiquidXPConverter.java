@@ -37,7 +37,7 @@ public class GuiLiquidXPConverter extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String tileName = this.te.getDisplayName().getUnformattedText();
-		this.fontRenderer.drawString(tileName, (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2), 8, 4210752);
+		this.fontRenderer.drawString(tileName, (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2), 4, 4210752);
 		drawPowerHover(mouseX, mouseY);
 		drawLiquidHover(mouseX, mouseY);
 	}

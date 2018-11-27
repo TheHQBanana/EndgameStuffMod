@@ -59,7 +59,7 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 		if (!this.world.isRemote) {
 			if (this.fluidTank.getFluidAmount() > mbPerXPChunk) {
 				int progressTime = getCanProgressWithTime();
-				if (totalProgressTime == 0 && progressTime > 0 && outputItems(true)) { //TEST OUPUTTING!
+				if (totalProgressTime == 0 && progressTime > 0 && outputItems(true)) {
 					totalProgressTime = progressTime;
 					takeFluids();
 				}
@@ -77,7 +77,6 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 	}
 	
 	private void takeFluids() {
-		//Do not take out the item in slot 0, as this is the catalyst and thus will not be consumed!
 		this.fluidTank.drainInternal(mbPerXPChunk, true);
 	}
 	
@@ -86,7 +85,7 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 		
 		ItemStack itemStack = this.inventory.getStackInSlot(0);
 		if (itemStack.isEmpty()) {
-			if (!simulate) this.inventory.setStackInSlot(0, new ItemStack(Items.DRAGON_BREATH, 1));
+			if (!simulate) this.inventory.setStackInSlot(0, new ItemStack(ModItems.XP_CHUNK, 1));
 			success = true;
 		} else if (itemStack.getItem() == ModItems.XP_CHUNK && itemStack.getCount() < itemStack.getItem().getItemStackLimit()) {
 			if (!simulate) this.inventory.getStackInSlot(0).grow(1);
@@ -97,9 +96,8 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 	
 	private int getCanProgressWithTime() {
 		FluidStack fluidStack = this.fluidTank.getFluid();
-		System.out.println("FLUID: " + this.fluidTank.getFluid());
-		if (fluidStack != null || this.fluidTank.getFluidAmount() < mbPerXPChunk || fluidStack.getFluid() != ModFluids.LIQUID_XP) return 0;
-		return 20;
+		if (fluidStack == null || this.fluidTank.getFluidAmount() < mbPerXPChunk || fluidStack.getFluid() != ModFluids.LIQUID_XP) return 0;
+		return baseProcessTime;
 	}
 	
 	@Override
@@ -149,7 +147,7 @@ public class TileEntityLiquidXPConverter extends TileEntityMachineBase implement
 			currentSpeedUpgrade = null;
 			speedUpgradeModifier = 0;
 		}
-		progressSpeed = (int)Math.max(1, Math.pow(this.speedUpgradeModifier, 2));
+		progressSpeed = Math.min(baseProcessTime, (int)Math.max(1, Math.pow(this.speedUpgradeModifier, 2)));
 	}
 	
 	private void updateEfficiencyModifier(int slot) {

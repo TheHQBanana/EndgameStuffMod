@@ -1,5 +1,7 @@
 package com.hqbanana.endgamestuffmod.tileentities.generators.coal;
 
+import com.hqbanana.endgamestuffmod.blocks.generators.coal.BlockCoalGeneratorBase;
+import com.hqbanana.endgamestuffmod.blocks.generators.coal.BlockCoalGeneratorSimple;
 import com.hqbanana.endgamestuffmod.tileentities.generators.TileEntityGeneratorBase;
 
 import net.minecraft.block.Block;
@@ -50,6 +52,8 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase {
 	
 	@Override
 	public void update() {
+		boolean flag = this.isBurning();
+		
 		if (!this.world.isRemote) {
 			if (!this.inventory.getStackInSlot(0).isEmpty()) {
 				int burnTime = getItemBurnTime(this.inventory.getStackInSlot(0));
@@ -66,6 +70,10 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase {
 				}
 			}
 			
+			if (flag != this.isBurning()) {
+				BlockCoalGeneratorSimple.setState(this.isBurning(), this.world, this.pos);
+			}
+			
 			transmitEnergy();
 			this.markDirty();
 		}
@@ -74,6 +82,10 @@ public class TileEntityCoalGeneratorBase extends TileEntityGeneratorBase {
 	@Override
 	protected void burnFuel() {
 		this.inventory.getStackInSlot(0).shrink(1);
+	}
+	
+	protected boolean isBurning() {
+		return this.currentBurnTime > 0;
 	}
 	
 	public static int getItemBurnTime(ItemStack fuel) {
